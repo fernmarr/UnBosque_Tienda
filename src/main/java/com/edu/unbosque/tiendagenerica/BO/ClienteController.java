@@ -49,7 +49,7 @@ public class ClienteController {
 	@PutMapping("/actualizarCliente")
 	public void actualizarCliente(ClienteVO cliente) {
 		ClienteDAO Dao = new ClienteDAO();
-		Dao.registrarCliente(cliente);
+		Dao.actualizarCliente(cliente);
 	}
 
 
