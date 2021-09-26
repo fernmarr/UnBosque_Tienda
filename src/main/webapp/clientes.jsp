@@ -34,6 +34,10 @@
 <link rel="stylesheet" href="./assets/css/rootui-night.css"
 	media="(night)" class="rui-nightmode-link">
 <link rel="stylesheet" href="./assets/css/custom.css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+<script src="./assets/js/clientes.js"></script>
+
 </head>
 <body data-spy="scroll" data-target=".rui-page-sidebar"
 	data-offset="140"
@@ -137,7 +141,7 @@
 						aria-controls="contact" aria-selected="false">Actualizar
 							Cliente</a></li>
 					<li class="nav-item"><a class="nav-link" id="borrar-tab"
-						data-toggle="tab" href="#borrarC" role="tab"
+						data-toggle="tab" href="#borrarC" onclick="loadclientesBorrar()" role="tab"
 						aria-controls="contact" aria-selected="false">Borrar Cliente</a></li>
 				</ul>
 				<!-- tabs content -->
@@ -202,28 +206,29 @@
 						aria-labelledby="actualizar-tab">
 						<p class="mnb-4">Ingrese la cédula del cliente a actualizar:</p>
 						<br>
-						<form id="formActConsCli" class="#">
+						<form id="formActConsCli" class="#" action=javascript:;" onsubmit="actualizarCliente()">
 							<div class="row vertical-gap sm-gap">
 								<div class="col-12">
-									<input type="text" class="form-control" id="cedula_clienteA"
-										placeholder="Cédula">
+									<input type="text" class="form-control" id="cedula_clienteA"onfocus="ocultaerrorConsultar()"
+										placeholder="Cédula" required>
 								</div>
 								<div class="col-12">
-									<button type="button" class="btn btn-info"
-										onclick="consultarCliente()">Consultar</button>
+									<button type="button" class="btn btn-info" onclick="consultarCliente()">Consultar</button>
 								</div>
-								
+								<div class="col-12">
+									<div id="errorC" class="alert alert-danger d-none" role="alert">Error, el Cliente no Existe, intente nuevamente.</div>
+								</div>
 								<div class="col-12">
 									<input type="text" class="form-control" id="nombre_clienteA"
-										placeholder="Nombre Cliente">
+										placeholder="Nombre Cliente" required>
 								</div>
 								<div class="col-12">
 									<input type="text" class="form-control" id="direccion_clienteA"
-										placeholder="Dirección">
+										placeholder="Dirección" required>
 								</div>
 								<div class="col-12">
 									<input type="text" class="form-control" id="telefono_clienteA"
-										placeholder="Teléfono">
+										placeholder="Teléfono" required>
 								</div>
 								<div class="col-12">
 									<div class="input-group">
@@ -234,52 +239,24 @@
 											</div>
 										</div>
 										<input type="email" class="form-control" id="email_clienteA"
-											placeholder="Email">
+											placeholder="Email" required>
 									</div>
 								</div>
 								<div class="col-12">
-									<button type="button" class="btn btn-success">Guardar</button>
+									<button id="btnA" type="submit" class="btn btn-success d-none">Guardar</button>
 								</div>
-
 							</div>
 						</form>
 						<br>
-						<div class="alert alert-danger" role="alert">Cliente
-							Actualizado</div>
+						<div id="errorCreaA" class="alert alert-danger d-none" role="alert">Error al Actualizar el Cliente, datos duplicados o incorrectos, intente nuevamente.</div>
+						<div id="okCreaA" class="alert alert-success d-none" role="alert">Cliente Actualizado Exitosamente</div>
 					</div>
 					<!-- tab Borrar -->
 					<div class="tab-pane fade" id="borrarC" role="tabpanel"
 						aria-labelledby="borrar-tab">
 						<p class="mnb-4">Seleccione el cliente a Borrar:</p>
 						<br>
-						<table class="table table-striped table-dark">
-							<thead>
-								<tr>
-									<th scope="col">cedula_cliente</th>
-									<th scope="col">nombre_cliente</th>
-									<th scope="col">direccion_cliente</th>
-									<th scope="col">telefono_cliente</th>
-									<th scope="col">email_cliente</th>
-									<th scope="col">Borrar</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>1111</td>
-									<td>qweqweqw</td>
-									<td>ddsfd</td>
-									<td>ddsfd</td>
-									<td>@mdo</td>
-									<td><button type="button"
-											class="btn btn-danger btn-uniform btn-round">
-											<span class="icon"><span stroke-width="1.5"
-												data-feather="trash-2"></span></span>
-										</button></td>
-								</tr>
-							</tbody>
-						</table>
-						<div class="alert alert-danger" role="alert">Cliente
-							Eliminado</div>
+						<div id="clientesinfoBorrar"></div>
 					</div>
 				</div>
 			</div>
@@ -290,6 +267,31 @@
 			</div>
 		</footer>
 	</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><span class="icon-stack">
+  <i class="icon-circle icon-stack-base"></i>
+  <i class="icon-warning-sign icon-light icon-warning"></i>
+</span> Clientes Eliminado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>Se elimino el Cliente Correctamente</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-brand" onclick="loadclientesBorrar()" data-dismiss="modal">Continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 	<script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
@@ -314,137 +316,4 @@
 
 
 
-	<script>
-		// Crear Cliente
-		function enviarCli() {
-			var x = document.getElementById("cedula_cliente").value;
-			var y = document.getElementById("email_cliente").value;
-			console.log(x);
-			console.log(y);
-			var req = new XMLHttpRequest();
-			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarclientes', false);
-			req.send(null);
-			var clientes = null;
-			if (req.status == 200)
-				clientes = JSON.parse(req.responseText);
-			console.log(JSON.parse(req.responseText));
-
-			for (i = 0; i < clientes.length; i++) {
-				console.log(clientes[i].cedula_cliente);
-				console.log(clientes[i].email_cliente);
-				if (clientes[i].cedula_cliente == x) {
-					console.log(clientes[i].cedula_cliente + " " + x);
-					coincidencia = true
-					break;
-				}
-				
-				if (clientes[i].email_cliente === y) {
-					console.log(clientes[i].email_cliente + " " + y);
-					coincidencia = true
-					break;
-				}
-
-			}
-			console.log(coincidencia);
-
-			if (coincidencia == false) {
-				var formData = new FormData();
-				formData.append("cedula_cliente", document
-						.getElementById("cedula_cliente").value);
-				formData.append("nombre_cliente", document
-						.getElementById("nombre_cliente").value);
-				formData.append("direccion_cliente", document
-						.getElementById("direccion_cliente").value);
-				formData.append("telefono_cliente",
-						document.getElementById("telefono_cliente").value);
-				formData.append("email_cliente",
-						document.getElementById("email_cliente").value);
-				var xhr = new XMLHttpRequest();
-				xhr.open("POST", "http://localhost:8080/registrarcliente");
-
-				var element = document.getElementById("errorCreaCli");
-				element.classList.add("d-none");
-				var element2 = document.getElementById("okCreaCli");
-				element2.classList.remove("d-none");
-
-				document.getElementById("cedula_cliente").value = "";
-				document.getElementById("nombre_cliente").value = "";
-				document.getElementById("direccion_cliente").value = "";
-				document.getElementById("telefono_cliente").value = "";
-				document.getElementById("email_cliente").value = "";
-				xhr.send(formData);
-
-			} else {
-				var element = document.getElementById("errorCreaCli");
-				element.classList.remove("d-none");
-				var element2 = document.getElementById("okCreaCli");
-				element2.classList.add("d-none");
-				document.getElementById("cedula_cliente").value = "";
-				document.getElementById("nombre_cliente").value = "";
-				document.getElementById("direccion_cliente").value = "";
-				document.getElementById("telefono_cliente").value = "";
-				document.getElementById("email_cliente").value = "";
-			}
-		}
-
-		// Oculta mensajes de error
-		function ocultaerrorCrearCli() {
-
-			var element = document.getElementById("errorCreaCli");
-			element.classList.add("d-none");
-			var element2 = document.getElementById("okCreaCli");
-			element2.classList.add("d-none");
-		}
-
-		// Listar Clientes
-		var baseurl = "http://localhost:8080/listarclientes";
-		function loadclientes() {
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.open("GET", baseurl, true);
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-					var clientes = JSON.parse(xmlhttp.responseText);
-					var tbltop = "<table class='table table-striped table-dark'><thead><tr><th scope='col'>Cédula Cliente</th><th scope='col'>Nombre Cliente</th><th scope='col'>Dirección</th><th scope='col'>Teléfono</th><th scope='col'>Email</th></tr></thead><tbody>";
-					var main = "";
-					for (i = 0; i < clientes.length; i++) {
-						main += "<tr><td>" + clientes[i].cedula_cliente
-								+ "</td><td>" + clientes[i].nombre_cliente
-								+ "</td><td>" + clientes[i].direccion_cliente
-								+ "</td><td>" + clientes[i].telefono_cliente
-								+ "</td><td>" + clientes[i].email_cliente
-								+ "</td></tr>";
-					}
-					var tblbottom = "</tbody></table>";
-					var tbl = tbltop + main + tblbottom;
-					document.getElementById("clientesinfo").innerHTML = tbl;
-				}
-			};
-			xmlhttp.send();
-		}
-
-		// Listar Clientes
-
-		function consultarCliente() {
-			var cedCLI = document.getElementById("cedula_clienteA").value;
-			console.log(cedCLI);
-			var baseurl2 = "http://localhost:8080/consultarcliente?cedula_cliente=" + cedCLI;
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.open("GET", baseurl2, true);
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-					var clientes = JSON.parse(xmlhttp.responseText);
-
-					document.getElementById("cedula_clienteA").value = clientes.cedula_cliente;
-					document.getElementById("nombre_clienteA").value = clientes.nombre_cliente;
-					document.getElementById("direccion_clienteA").value = clientes.direccion_cliente;
-					document.getElementById("telefono_clienteA").value = clientes.telefono_cliente;
-					document.getElementById("email_clienteA").value = clientes.email_cliente;
-
-				}
-			};
-		}
-
-		// Actualizar clientes
-		//var baseurl3 = "http://localhost:8080/listarclientes";
-	</script>
+	

@@ -34,6 +34,10 @@
 <link rel="stylesheet" href="./assets/css/rootui-night.css"
 	media="(night)" class="rui-nightmode-link">
 <link rel="stylesheet" href="./assets/css/custom.css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+<script src="./assets/js/usuarios.js"></script>
+
 </head>
 <body data-spy="scroll" data-target=".rui-page-sidebar"
 	data-offset="140"
@@ -137,7 +141,7 @@
 						aria-controls="contact" aria-selected="false">Actualizar
 							Usuario</a></li>
 					<li class="nav-item"><a class="nav-link" id="contact-tab"
-						data-toggle="tab" href="#borrar" role="tab"
+						data-toggle="tab" href="#borrar" onclick="loadusuariosBorrar()" role="tab"
 						aria-controls="contact" aria-selected="false">Borrar Usuario</a></li>
 				</ul>
 				<!-- tabs content -->
@@ -199,14 +203,17 @@
 						aria-labelledby="contact-tab">
 						<p class="mnb-4">Ingrese la cédula del usuario a actualizar:</p>
 						<br>
-						<form id="formActCons" class="#">
+						<form id="formActCons" class="#" action=javascript:;" onsubmit="actualizarUsuario()">
 							<div class="row vertical-gap sm-gap">
 								<div class="col-12">
-									<input type="text" class="form-control" id="cedula_usuarioA"
-										placeholder="Cédula">
+									<input type="text" class="form-control" id="cedula_usuarioA"onfocus="ocultaerrorConsultar()"
+										placeholder="Cédula" required>
 								</div>
 								<div class="col-12">
 									<button type="button" class="btn btn-info" onclick="consultarUsuario()">Consultar</button>
+								</div>
+								<div class="col-12">
+									<div id="errorC" class="alert alert-danger d-none" role="alert">Error, el Usuario no Existe, intente nuevamente.</div>
 								</div>
 								<div class="col-12">
 									<div class="input-group">
@@ -217,88 +224,37 @@
 											</div>
 										</div>
 										<input type="text" class="form-control" id="email_usuarioA"
-											placeholder="Email">
+											placeholder="Email" required>
 									</div>
 								</div>
 								<div class="col-12">
 									<input type="text" class="form-control" id="nombre_usuarioA"
-										placeholder="Nombre">
+										placeholder="Nombre" required>
 								</div>
 								<div class="col-12">
 									<input type="text" class="form-control" id="usuarioA"
-										placeholder="Usuario">
+										placeholder="Usuario" required>
 								</div>
 								<div class="col-12">
-									<input type="password" class="form-control" id="passwordA"
-										placeholder="Contraseña">
+									<input type="text" class="form-control" id="passwordA"
+										placeholder="Contraseña" required>
 								</div>
 								<div class="col-12">
-									<button type="button" class="btn btn-success">Guardar</button>
+									<button id="btnA" type="submit" class="btn btn-success d-none">Guardar</button>
 								</div>
 
 							</div>
 						</form>
 						<br>
-						<div class="alert alert-danger" role="alert">Usuario
-							Actualizado</div>
+						<div id="errorCreaA" class="alert alert-danger d-none" role="alert">Error al Actualizar el Usuario, datos duplicados o incorrectos, intente nuevamente.</div>
+						<div id="okCreaA" class="alert alert-success d-none" role="alert">Usuario Actualizado Exitosamente</div>
 					</div>
 					<!-- tab Borrar -->
 					<div class="tab-pane fade" id="borrar" role="tabpanel"
 						aria-labelledby="contact-tab">
 						<p class="mnb-4">Seleccione el usuario a Borrar:</p>
 						<br>
-						<table class="table table-striped table-dark">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Cédula</th>
-									<th scope="col">Email</th>
-									<th scope="col">Nombre</th>
-									<th scope="col">Usuario</th>
-									<th scope="col">Borrar</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>1111</td>
-									<td>@mdo</td>
-									<td>qweqweqw</td>
-									<td>ddsfd</td>
-									<td><button type="button"
-											class="btn btn-danger btn-uniform btn-round">
-											<span class="icon"><span stroke-width="1.5"
-												data-feather="trash-2"></span></span>
-										</button></td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>2222</td>
-									<td>@fat</td>
-									<td>dsfsd dsfs</td>
-									<td>dsfsd</td>
-									<td><button type="button"
-											class="btn btn-danger btn-uniform btn-round">
-											<span class="icon"><span stroke-width="1.5"
-												data-feather="trash-2"></span></span>
-										</button></td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Larry</td>
-									<td>@twitter</td>
-									<td>fsdf fdsfsd</td>
-									<td>fsdf</td>
-									<td><button type="button"
-											class="btn btn-danger btn-uniform btn-round">
-											<span class="icon"><span stroke-width="1.5"
-												data-feather="trash-2"></span></span>
-										</button></td>
-								</tr>
-							</tbody>
-						</table>
-						<div class="alert alert-danger" role="alert">Usuario
-							Eliminado</div>
+						<div id="usuariosinfoBorrar"></div>
 					</div>
 				</div>
 			</div>
@@ -309,6 +265,35 @@
 			</div>
 		</footer>
 	</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><span class="icon-stack">
+  <i class="icon-circle icon-stack-base"></i>
+  <i class="icon-warning-sign icon-light icon-warning"></i>
+</span> Usuario Eliminado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>Se elimino el Usuario Correctamente</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-brand" onclick="loadusuariosBorrar()" data-dismiss="modal">Continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 	<script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
@@ -332,137 +317,7 @@
 	<script src="./assets/js/rootui-init.js"></script>
 
 
-
-
-	<script>
-		// Crear Usuario
-		function enviar() {
-			var x = document.getElementById("user").value;
-			var y = document.getElementById("cedula_usuario").value;
-			var req = new XMLHttpRequest();
-			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarusuarios', false);
-			req.send(null);
-			var usuarios = null;
-			if (req.status == 200)
-				usuarios = JSON.parse(req.responseText);
-			console.log(JSON.parse(req.responseText));
-
-			for (i = 0; i < usuarios.length; i++) {
-				console.log(usuarios[i].usuario);
-				console.log(usuarios[i].cedula_usuario);
-				if (usuarios[i].usuario === x) {
-					console.log(usuarios[i].usuario + " " + x);
-					coincidencia = true
-					break;
-				}
-
-				if (usuarios[i].cedula_usuario == y) {
-					console.log(usuarios[i].cedula_usuario + " " + y);
-					coincidencia = true
-					break;
-				}
-			}
-			console.log(coincidencia);
-
-			if (coincidencia == false) {
-				var formData = new FormData();
-				formData.append("cedula_usuario", document
-						.getElementById("cedula_usuario").value);
-				formData.append("email_usuario", document
-						.getElementById("email_usuario").value);
-				formData.append("nombre_usuario", document
-						.getElementById("nombre_usuario").value);
-				formData.append("password",
-						document.getElementById("password").value);
-				formData.append("usuario",
-						document.getElementById("user").value);
-				var xhr = new XMLHttpRequest();
-				xhr.open("POST", "http://localhost:8080/registrarusuario");
-
-				var element = document.getElementById("errorCrea");
-				element.classList.add("d-none");
-				var element2 = document.getElementById("okCrea");
-				element2.classList.remove("d-none");
-
-				document.getElementById("cedula_usuario").value = "";
-				document.getElementById("email_usuario").value = "";
-				document.getElementById("nombre_usuario").value = "";
-				document.getElementById("password").value = "";
-				document.getElementById("user").value = "";
-				xhr.send(formData);
-
-			} else {
-				var element = document.getElementById("errorCrea");
-				element.classList.remove("d-none");
-				var element2 = document.getElementById("okCrea");
-				element2.classList.add("d-none");
-				document.getElementById("cedula_usuario").value = "";
-				document.getElementById("email_usuario").value = "";
-				document.getElementById("nombre_usuario").value = "";
-				document.getElementById("password").value = "";
-				document.getElementById("user").value = "";
-			}
-		}
-		
-		// Oculta mensajes de error
-		function ocultaerrorCrear(){
-			
-			var element = document.getElementById("errorCrea");
-			element.classList.add("d-none");
-			var element2 = document.getElementById("okCrea");
-			element2.classList.add("d-none");
-		}
-
-		// Listar usuarios
-		var baseurl = "http://localhost:8080/listarusuarios";
-		function loadusuarios() {
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.open("GET", baseurl, true);
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-					var usuarios = JSON.parse(xmlhttp.responseText);
-					var tbltop = "<table class='table table-striped table-dark'><thead><tr><th scope='col'>Cédula</th><th scope='col'>Email</th><th scope='col'>Nombre</th><th scope='col'>Usuario</th><th scope='col'>Borrar</th></tr></thead><tbody>";
-					var main = "";
-					for (i = 0; i < usuarios.length; i++) {
-						main += "<tr><td>" + usuarios[i].cedula_usuario
-								+ "</td><td>" + usuarios[i].email_usuario
-								+ "</td><td>" + usuarios[i].nombre_usuario
-								+ "</td><td>" + usuarios[i].password
-								+ "</td><td>" + usuarios[i].usuario
-								+ "</td></tr>";
-					}
-					var tblbottom = "</tbody></table>";
-					var tbl = tbltop + main + tblbottom;
-					document.getElementById("usuariosinfo").innerHTML = tbl;
-				}
-			};
-			xmlhttp.send();
-		}
-		
-		// Listar usuarios
-		
-		async function consultarUsuario() {
-			let cedUsr = document.getElementById("cedula_usuarioA").value;
-			console.log(cedUsr);
-			var url = "http://localhost:8080/consultarusuario?cedula_usuario=1";
-			
-			 try {
-			        let res = await fetch(url);
-			        return await res.json();
-			        console.log(res);
-			    } catch (error) {
-			        console.log(error);
-			    }
-			
-			
-
-		
-		// Actualizar usuarios
-		//var baseurl3 = "http://localhost:8080/listarusuarios";
-		}
-		
-	</script>
+	
 
 </body>
 </html>
