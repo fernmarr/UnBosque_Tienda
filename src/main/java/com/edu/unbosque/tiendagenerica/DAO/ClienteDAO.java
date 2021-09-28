@@ -211,7 +211,7 @@ public class ClienteDAO {
 			Statement estatuto = conex.getConnection().createStatement();
 			
 			//String con la sentencia a ejecutar
-			String sentencia = "UPDATE tiendagenerica.cliente "
+			String sentencia = "UPDATE tiendagenerica.clientes "
 					+ "SET cedula_cliente = '"+cliente.getCedula_cliente()+"',"
 					+ "nombre_cliente = '"+cliente.getNombre_cliente()+"',"
 					+ "direccion_cliente = '"+cliente.getDireccion_cliente()+"',"
