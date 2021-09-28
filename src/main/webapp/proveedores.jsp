@@ -7,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Tienda Genérica</title>
+<title>Tienda Gen&eacute;rica</title>
 <meta name="description"
 	content="RootUI - clean and powerful solution for your Dashboards, Administration areas.">
 <meta name="keywords"
@@ -155,7 +155,7 @@
 							<div class="row vertical-gap sm-gap">
 								<div class="col-12">
 									<input type="text" class="form-control" id="exampleBase1"
-										placeholder="Cédula">
+										placeholder="C&eacute;dula">
 								</div>
 								<div class="col-12">
 									<div class="input-group">
@@ -179,7 +179,7 @@
 								</div>
 								<div class="col-12">
 									<input type="password" class="form-control" id="exampleBase1"
-										placeholder="Contraseña">
+										placeholder="Contrase&ntilde;a">
 								</div>
 								<div class="col-12">
 									<button type="button" class="btn btn-success">Guardar</button>
@@ -200,7 +200,7 @@
 							<thead>
 								<tr>
 									<th scope="col">#</th>
-									<th scope="col">Cédula</th>
+									<th scope="col">C&eacute;dula</th>
 									<th scope="col">Email</th>
 									<th scope="col">Nombre</th>
 									<th scope="col">Usuario</th>
@@ -240,7 +240,7 @@
 							<div class="row vertical-gap sm-gap">
 								<div class="col-12">
 									<input type="text" class="form-control" id="exampleBase1"
-										placeholder="Cédula">
+										placeholder="C&eacute;dula">
 								</div>
 								<div class="col-12">
 									<button type="button" class="btn btn-info">Consultar</button>
@@ -267,7 +267,7 @@
 								</div>
 								<div class="col-12">
 									<input type="password" class="form-control" id="exampleBase1"
-										placeholder="Contraseña">
+										placeholder="Contrase&ntilde;a">
 								</div>
 								<div class="col-12">
 									<button type="button" class="btn btn-success">Guardar</button>

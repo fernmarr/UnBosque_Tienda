@@ -7,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Tienda Genérica</title>
+<title>Tienda Gen&eacute;rica</title>
 <meta name="description"
 	content="RootUI - clean and powerful solution for your Dashboards, Administration areas.">
 <meta name="keywords"
