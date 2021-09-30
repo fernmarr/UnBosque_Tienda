@@ -141,35 +141,15 @@
 						aria-labelledby="home-tab">
 						<p class="mnb-4">Cargue el archivo con los datos del producto a crear:</p>
 						<br>
-						<form class="rui-dropzone dropzone" action="#"
-							data-dz-max-mb="0.5" data-dz-max-files="2"
-							data-dz-remove-link="true">
-							<input type="file" name="file" class="rui-dropzone-input">
-							
-							<!-- Your Remove-icon -->
-							<span data-feather="x"
-								class="rui-icon rui-icon-stroke-1_5 rui-dropzone-remove-icon"></span>
-
-							<div class="dz-message">
-								<span class="rui-dropzone-icon"> <span
-									data-feather="upload-cloud"
-									class="rui-icon rui-icon-stroke-0_5"></span>
-								</span> <span class="rui-dropzone-text"> Drop files here or
-									click to upload. </span>
-							</div>
+						<form class="rui-dropzone dropzone" action="#" data-dz-max-mb="0.5" data-dz-max-files="2" data-dz-remove-link="true">
+						    <div class="custom-file">
+						    <input type="file" class="custom-file-input" id="inputGroupFile01">
+						    <label class="custom-file-label" for="inputGroupFile01">Seleccione el archivo</label>
+						  </div>
 						</form>
 						<br>
-						<div class="alert alert-danger" role="alert">Proveedor
-							Creado</div>
+						<div class="alert alert-danger" role="alert">Productos Cargados</div>
 					</div>
-
-
-
-
-
-
-
-
 				</div>
 			</div>
 			<footer class="rui-footer">

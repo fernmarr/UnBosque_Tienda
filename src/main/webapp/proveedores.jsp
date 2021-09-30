@@ -34,6 +34,11 @@
 <link rel="stylesheet" href="./assets/css/rootui-night.css"
 	media="(night)" class="rui-nightmode-link">
 <link rel="stylesheet" href="./assets/css/custom.css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+<script src="./assets/js/proveedores.js"></script>
+
+
 </head>
 <body data-spy="scroll" data-target=".rui-page-sidebar"
 	data-offset="140"
@@ -102,10 +107,6 @@
 				type="button" aria-label="Toggle side navigation">
 				<span></span>
 			</button>
-			<a class="rui-navbar-logo mr-auto" href="dashboard.html"><img
-				src="./assets/images/logo.svg"
-				data-src-night="./assets/images/logo-white.svg"
-				data-src-day="./assets/images/logo.svg" alt="" width="45"></a>
 			<div class="dropdown dropdown-triangle">
 				<a class="dropdown-item rui-navbar-avatar" href="#"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
@@ -129,222 +130,119 @@
 			<div class="container-fluid">
 				<!-- tabs header -->
 				<ul class="nav nav-tabs" role="tablist">
-					<li class="nav-item"><a class="nav-link active" id="home-tab"
-						data-toggle="tab" href="#crear" role="tab" aria-controls="home"
+					<li class="nav-item"><a class="nav-link active" id="crear-prov"
+						data-toggle="tab" href="#crearP" role="tab" aria-controls="home"
 						aria-selected="true">Crear Proveedor</a></li>
-					<li class="nav-item"><a class="nav-link" id="profile-tab"
-						data-toggle="tab" href="#consultar" role="tab"
+					<li class="nav-item"><a class="nav-link" id="consultar-prov"
+						data-toggle="tab" href="#consultarP" onclick="loadproveedores()" role="tab"
 						aria-controls="profile" aria-selected="false">Consultar
 							Proveedores</a></li>
-					<li class="nav-item"><a class="nav-link" id="contact-tab"
-						data-toggle="tab" href="#actualizar" role="tab"
+					<li class="nav-item"><a class="nav-link" id="actualizar-prov"
+						data-toggle="tab" href="#actualizarP" role="tab"
 						aria-controls="contact" aria-selected="false">Actualizar
 							Proveedor</a></li>
-					<li class="nav-item"><a class="nav-link" id="contact-tab"
-						data-toggle="tab" href="#borrar" role="tab"
+					<li class="nav-item"><a class="nav-link" id="borrar-prov"
+						data-toggle="tab" href="#borrarP" onclick="loadproveedoresBorrar()" role="tab"
 						aria-controls="contact" aria-selected="false">Borrar Proveedor</a></li>
 				</ul>
 				<!-- tabs content -->
 				<div class="tab-content">
 					<!-- tab Crear -->
-					<div class="tab-pane fade show active" id="crear" role="tabpanel"
-						aria-labelledby="home-tab">
-						<p class="mnb-4">Ingrese los datos del proveedor a crear:</p>
+					<div class="tab-pane fade show active" id="crearP" role="tabpanel"
+						aria-labelledby="crear-tab">
+						<p class="mnb-4">Ingrese los datos del Proveedor a crear:</p>
 						<br>
-						<form class="#">
+						<form id="formCrearCli" action=javascript:;" onsubmit="enviarPro()">
 							<div class="row vertical-gap sm-gap">
 								<div class="col-12">
-									<input type="text" class="form-control" id="exampleBase1"
-										placeholder="C&eacute;dula">
+									<input type="text" class="form-control" id="nitproveedor"
+										placeholder="Nit Proveedor" required onfocus="ocultaerrorCrearPro()">
 								</div>
 								<div class="col-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<span data-feather="at-sign"
-													class="rui-icon rui-icon-stroke-1_5"></span>
-											</div>
-										</div>
-										<input type="text" class="form-control" id="exampleBase2"
-											placeholder="Email">
-									</div>
+									<input type="text" class="form-control" id="ciudad_proveedor"
+										placeholder="Ciudad Proveedor" required>
 								</div>
 								<div class="col-12">
-									<input type="text" class="form-control" id="exampleBase1"
-										placeholder="Nombre">
+									<input type="text" class="form-control" id="direccion_proveedor"
+										placeholder="DirecciÛn Proveedor" required>
 								</div>
 								<div class="col-12">
-									<input type="text" class="form-control" id="exampleBase1"
-										placeholder="Usuario">
+									<input type="text" class="form-control" id="nombre_proveedor"
+										placeholder="Nombre Proveedor" required>
 								</div>
 								<div class="col-12">
-									<input type="password" class="form-control" id="exampleBase1"
-										placeholder="Contrase&ntilde;a">
+									<input type="text" class="form-control" id="telefono_proveedor"
+										placeholder="TelÈfono Proveedor" required>
 								</div>
 								<div class="col-12">
-									<button type="button" class="btn btn-success">Guardar</button>
+									<button type="submit" class="btn btn-success">Guardar</button>
 								</div>
-
 							</div>
 						</form>
 						<br>
-						<div class="alert alert-danger" role="alert">Proveedor Creado
-						</div>
+						<div id="errorCreaPro" class="alert alert-danger d-none" role="alert">Error
+							al crear el Proveedor, datos duplicados o incorrectos, intente
+							nuevamente.</div>
+						<div id="okCreaPro" class="alert alert-success d-none" role="alert">Proveedor
+							Creado Exitosamente</div>
 					</div>
 					<!-- tab Consultar -->
-					<div class="tab-pane fade" id="consultar" role="tabpanel"
-						aria-labelledby="profile-tab">
+					<div class="tab-pane fade" id="consultarP" role="tabpanel"
+						aria-labelledby="consultar-tab">
 						<p class="mnb-4">Lista de Proveedores</p>
 						<br>
-						<table class="table table-striped table-dark">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">C&eacute;dula</th>
-									<th scope="col">Email</th>
-									<th scope="col">Nombre</th>
-									<th scope="col">Usuario</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>1111</td>
-									<td>@mdo</td>
-									<td>qweqweqw</td>
-									<td>ddsfd</td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>2222</td>
-									<td>@fat</td>
-									<td>dsfsd dsfs</td>
-									<td>dsfsd</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Larry</td>
-									<td>@twitter</td>
-									<td>fsdf fdsfsd</td>
-									<td>fsdf</td>
-								</tr>
-							</tbody>
-						</table>
+						<div id="proveedoresinfo"></div>
 					</div>
 					<!-- tab Actualizar -->
-					<div class="tab-pane fade" id="actualizar" role="tabpanel"
-						aria-labelledby="contact-tab">
-						<p class="mnb-4">Ingrese la c√©dula del proveedor a actualizar:</p>
+					<div class="tab-pane fade" id="actualizarP" role="tabpanel"
+						aria-labelledby="actualizar-tab">
+						<p class="mnb-4">Ingrese el NIT del proveedor a actualizar:</p>
 						<br>
-						<form class="#">
+						<form id="formActConsCli" class="#" action=javascript:;" onsubmit="actualizarProveedor()">
 							<div class="row vertical-gap sm-gap">
 								<div class="col-12">
-									<input type="text" class="form-control" id="exampleBase1"
-										placeholder="C&eacute;dula">
+									<input type="text" class="form-control" id="nitproveedorA"onfocus="ocultaerrorConsultar()"
+										placeholder="NIT Proveedor" required>
 								</div>
 								<div class="col-12">
-									<button type="button" class="btn btn-info">Consultar</button>
+									<button type="button" class="btn btn-info" onclick="consultarProveedor()">Consultar</button>
 								</div>
 								<div class="col-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<span data-feather="at-sign"
-													class="rui-icon rui-icon-stroke-1_5"></span>
-											</div>
-										</div>
-										<input type="text" class="form-control" id="exampleBase2"
-											placeholder="Email">
-									</div>
+									<div id="errorC" class="alert alert-danger d-none" role="alert">Error, el Proveedor no Existe, intente nuevamente.</div>
 								</div>
 								<div class="col-12">
-									<input type="text" class="form-control" id="exampleBase1"
-										placeholder="Nombre">
+									<input type="text" class="form-control" id="ciudad_proveedorA"
+										placeholder="Ciudad Proveedor" required>
 								</div>
 								<div class="col-12">
-									<input type="text" class="form-control" id="exampleBase1"
-										placeholder="Usuario">
+									<input type="text" class="form-control" id="direccion_proveedorA"
+										placeholder="DirecciÛn Proveedor" required>
 								</div>
 								<div class="col-12">
-									<input type="password" class="form-control" id="exampleBase1"
-										placeholder="Contrase&ntilde;a">
+									<input type="text" class="form-control" id="nombre_proveedorA"
+										placeholder="Nombre Proveedor" required>
 								</div>
 								<div class="col-12">
-									<button type="button" class="btn btn-success">Guardar</button>
+									<input type="text" class="form-control" id="telefono_proveedorA"
+										placeholder="TelÈfono Proveedor" required>
 								</div>
-
+								<div class="col-12">
+									<button id="btnA" type="submit" class="btn btn-success d-none">Guardar</button>
+								</div>
 							</div>
 						</form>
 						<br>
-						<div class="alert alert-danger" role="alert">Proveedor
-							Actualizado</div>
+						<div id="errorCreaA" class="alert alert-danger d-none" role="alert">Error al Actualizar el Proveedor, datos duplicados o incorrectos, intente nuevamente.</div>
+						<div id="okCreaA" class="alert alert-success d-none" role="alert">Proveedor Actualizado Exitosamente</div>
 					</div>
 					<!-- tab Borrar -->
-					<div class="tab-pane fade" id="borrar" role="tabpanel"
-						aria-labelledby="contact-tab">
-						<p class="mnb-4">Seleccione el proveedor a Borrar:</p>
+					<div class="tab-pane fade" id="borrarP" role="tabpanel"
+						aria-labelledby="borrar-tab">
+						<p class="mnb-4">Seleccione el Proveedor a Borrar:</p>
 						<br>
-						<table class="table table-striped table-dark">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">C√©dula</th>
-									<th scope="col">Email</th>
-									<th scope="col">Nombre</th>
-									<th scope="col">Usuario</th>
-									<th scope="col">Borrar</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>1111</td>
-									<td>@mdo</td>
-									<td>qweqweqw</td>
-									<td>ddsfd</td>
-									<td><button type="button"
-											class="btn btn-danger btn-uniform btn-round">
-											<span class="icon"><span stroke-width="1.5"
-												data-feather="trash-2"></span></span>
-										</button></td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>2222</td>
-									<td>@fat</td>
-									<td>dsfsd dsfs</td>
-									<td>dsfsd</td>
-									<td><button type="button"
-											class="btn btn-danger btn-uniform btn-round">
-											<span class="icon"><span stroke-width="1.5"
-												data-feather="trash-2"></span></span>
-										</button></td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Larry</td>
-									<td>@twitter</td>
-									<td>fsdf fdsfsd</td>
-									<td>fsdf</td>
-									<td><button type="button"
-											class="btn btn-danger btn-uniform btn-round">
-											<span class="icon"><span stroke-width="1.5"
-												data-feather="trash-2"></span></span>
-										</button></td>
-								</tr>
-							</tbody>
-						</table>
-						<div class="alert alert-danger" role="alert">Proveedor
-							Eliminado</div>
+						<div id="proveedoresinfoBorrar"></div>
 					</div>
 				</div>
-
-
-
-
-
-
-
 			</div>
 		</div>
 		<footer class="rui-footer">
@@ -353,6 +251,31 @@
 			</div>
 		</footer>
 	</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><span class="icon-stack">
+  <i class="icon-circle icon-stack-base"></i>
+  <i class="icon-warning-sign icon-light icon-warning"></i>
+</span> Proveedor Eliminado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>Se elimino el Proveedor Correctamente</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-brand" onclick="loadproveedoresBorrar()" data-dismiss="modal">Continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
