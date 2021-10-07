@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="./assets/vendor/jqvmap/dist/jqvmap.css">
 <link rel="stylesheet" href="./assets/css/rootui.css">
 <link rel="stylesheet" href="./assets/css/rootui-night.css"
-	media="(night)" class="rui-nightmode-link">
+	media="all" class="rui-nightmode-link">
 <link rel="stylesheet" href="./assets/css/custom.css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 

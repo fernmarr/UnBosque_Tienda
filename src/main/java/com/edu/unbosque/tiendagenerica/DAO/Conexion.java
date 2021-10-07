@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
-
+	
 	/** Parametros de conexion */
 	static String nombre_base_datos = "tiendagenerica";
 	//root
@@ -14,6 +14,16 @@ public class Conexion {
 	static String clavebd = "admin123";
 	//127.0.0.1 == localhost
 	static String url = "jdbc:mysql://127.0.0.1/" + nombre_base_datos;
+	
+
+	/** Parametros de conexion */
+	//static String nombre_base_datos = "g38e8";
+	//root
+	//static String usuariobd = "admin";
+	//mintic
+	//static String clavebd = "minticroca";
+	//127.0.0.1 == localhost
+	//static String url = "jdbc:mysql://tiendasgenericasdr-g9-g38-53.czo3ixoe3xoe.us-east-1.rds.amazonaws.com/" + nombre_base_datos;
 	
 	//objeto sin inicializar de la conexión
 	Connection connection = null;

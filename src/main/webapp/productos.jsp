@@ -7,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Tienda Genérica</title>
+<title>Tienda Gen&eacute;rica</title>
 <meta name="description"
 	content="RootUI - clean and powerful solution for your Dashboards, Administration areas.">
 <meta name="keywords"
@@ -32,8 +32,13 @@
 <link rel="stylesheet" href="./assets/vendor/jqvmap/dist/jqvmap.css">
 <link rel="stylesheet" href="./assets/css/rootui.css">
 <link rel="stylesheet" href="./assets/css/rootui-night.css"
-	media="(night)" class="rui-nightmode-link">
+	media="all" class="rui-nightmode-link">
 <link rel="stylesheet" href="./assets/css/custom.css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+<script src="./assets/js/productos.js"></script>
+
+
 </head>
 <body data-spy="scroll" data-target=".rui-page-sidebar"
 	data-offset="140"
@@ -102,10 +107,6 @@
 				type="button" aria-label="Toggle side navigation">
 				<span></span>
 			</button>
-			<a class="rui-navbar-logo mr-auto" href="dashboard.html"><img
-				src="./assets/images/logo.svg"
-				data-src-night="./assets/images/logo-white.svg"
-				data-src-day="./assets/images/logo.svg" alt="" width="45"></a>
 			<div class="dropdown dropdown-triangle">
 				<a class="dropdown-item rui-navbar-avatar" href="#"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
@@ -129,57 +130,214 @@
 			<div class="container-fluid">
 				<!-- tabs header -->
 				<ul class="nav nav-tabs" role="tablist">
-					<li class="nav-item"><a class="nav-link active" id="home-tab"
-						data-toggle="tab" href="#crear" role="tab" aria-controls="home"
+					<li class="nav-item"><a class="nav-link active" id="cargar-prod"
+						data-toggle="tab" href="#cargarProd" role="tab" aria-controls="cargar"
+						aria-selected="true">Cargar Productos</a></li>
+					<li class="nav-item"><a class="nav-link" id="crear-prod"
+						data-toggle="tab" href="#crearProd" role="tab" aria-controls="crear"
 						aria-selected="true">Crear Producto</a></li>
-					
+					<li class="nav-item"><a class="nav-link" id="consultar-prod"
+						data-toggle="tab" href="#consultarProd" onclick="loadproductos()" role="tab"
+						aria-controls="consultar" aria-selected="false">Consultar
+							Productos</a></li>
+					<li class="nav-item"><a class="nav-link" id="actualizar-prod"
+						data-toggle="tab" href="#actualizarProd" role="tab"
+						aria-controls="actualizar" aria-selected="false">Actualizar
+							Producto</a></li>
+					<li class="nav-item"><a class="nav-link" id="borrar-prod"
+						data-toggle="tab" href="#borrarProd" onclick="loadproductosBorrar()" role="tab"
+						aria-controls="borrar" aria-selected="false">Borrar Producto</a></li>
 				</ul>
 				<!-- tabs content -->
 				<div class="tab-content">
-					<!-- tab Crear -->
-					<div class="tab-pane fade show active" id="crear" role="tabpanel"
-						aria-labelledby="home-tab">
-						<p class="mnb-4">Cargue el archivo con los datos del producto a crear:</p>
+					<!-- tab Cargar -->
+					<div class="tab-pane fade show active" id="cargarProd" role="tabpanel"
+						aria-labelledby="cargar-tab">
+						<p class="mnb-4">Seleccione el archivo a cargar:</p>
 						<br>
-						<form class="rui-dropzone dropzone" action="#" data-dz-max-mb="0.5" data-dz-max-files="2" data-dz-remove-link="true">
-						    <div class="custom-file">
-						    <input type="file" class="custom-file-input" id="inputGroupFile01">
-						    <label class="custom-file-label" for="inputGroupFile01">Seleccione el archivo</label>
-						  </div>
+						<form id="form1">
+							<div>
+								<label for="formFileLg" class="form-label">Seleccionar
+									archivo CSV con el inventario de productos</label>
+									<input
+									class="form-control form-control-lg" id="archivo"
+									type="file" accept=".csv">
+									
+								<button type="button" class="btn btn-success"
+									onclick="subirArchivo()">Subir archivo</button>
+							</div>
+
 						</form>
 						<br>
-						<div class="alert alert-danger" role="alert">Productos Cargados</div>
+						<div id="errorCargarProd" class="alert alert-danger d-none" role="alert">Error
+							al cargar el Archivo, datos duplicados o incorrectos, intente
+							nuevamente.</div>
+						<div id="okCargarProd" class="alert alert-success d-none" role="alert">Archivo
+							Cargado Exitosamente</div>
+					</div>
+					<!-- tab Crear -->
+					<div class="tab-pane fade show" id="crearProd" role="tabpanel"
+						aria-labelledby="crear-tab">
+						<p class="mnb-4">Ingrese los datos del Producto a crear:</p>
+						<br>
+						<form id="formCrearProd" action=javascript:;" onsubmit="enviarProd()">
+							<div class="row vertical-gap sm-gap">
+								<div class="col-12">
+									<input type="text" class="form-control" id="codigo_producto"
+										placeholder="C&oacute;digo Producto" required onfocus="ocultaerrorCrearProd()">
+								</div>
+								<div class="col-12">
+									<input type="text" class="form-control" id="ivacompra"
+										placeholder="IVA Compra" required>
+								</div>
+								<div class="col-12">
+									<input type="text" class="form-control" id="nitproveedor"
+										placeholder="NIT Proveedor" required>
+								</div>
+								<div class="col-12">
+									<input type="text" class="form-control" id="nombre_producto"
+										placeholder="Nombre Producto" required>
+								</div>
+								<div class="col-12">
+									<input type="text" class="form-control" id="precio_compra"
+										placeholder="Precio Compra" required>
+								</div>
+								<div class="col-12">
+									<input type="text" class="form-control" id="precio_venta"
+										placeholder="Precio Venta" required>
+								</div>
+								<div class="col-12">
+									<button type="submit" class="btn btn-success">Guardar</button>
+								</div>
+							</div>
+						</form>
+						<br>
+						<div id="errorCreaProd" class="alert alert-danger d-none" role="alert">Error
+							al crear el Producto, datos duplicados o incorrectos, intente
+							nuevamente.</div>
+						<div id="okCreaProd" class="alert alert-success d-none" role="alert">Producto
+							Creado Exitosamente</div>
+					</div>
+					<!-- tab Consultar -->
+					<div class="tab-pane fade" id="consultarProd" role="tabpanel"
+						aria-labelledby="consultar-tab">
+						<p class="mnb-4">Lista de Productos</p>
+						<br>
+						<div id="productosinfo"></div>
+					</div>
+					<!-- tab Actualizar -->
+					<div class="tab-pane fade" id="actualizarProd" role="tabpanel"
+						aria-labelledby="actualizar-tab">
+						<p class="mnb-4">Ingrese el ID del Producto a actualizar:</p>
+						<br>
+						<form id="formActConsProd" class="#" action=javascript:;" onsubmit="actualizarProducto()">
+							<div class="row vertical-gap sm-gap">
+								<div class="col-12">
+									<input type="text" class="form-control" id="codigo_productoA"onfocus="ocultaerrorConsultar()"
+										placeholder="C&oacute;digo Producto" required>
+								</div>
+								<div class="col-12">
+									<button type="button" class="btn btn-info" onclick="consultarProducto()">Consultar</button>
+								</div>
+								<div class="col-12">
+									<div id="errorC" class="alert alert-danger d-none" role="alert">Error, el Producto no Existe, intente nuevamente.</div>
+								</div>
+								<div class="col-12">
+									<input type="text" class="form-control" id="ivacompraA"
+										placeholder="IVA Compra" required>
+								</div>
+								<div class="col-12">
+									<input type="text" class="form-control" id="nitproveedorA"
+										placeholder="NIT Proveedor" required>
+								</div>
+								<div class="col-12">
+									<input type="text" class="form-control" id="nombre_productoA"
+										placeholder="Nombre Producto" required>
+								</div>
+								<div class="col-12">
+									<input type="text" class="form-control" id="precio_compraA"
+										placeholder="Precio Compra" required>
+								</div>
+								<div class="col-12">
+									<input type="text" class="form-control" id="precio_ventaA"
+										placeholder="Precio Venta" required>
+								</div>
+								<div class="col-12">
+									<button id="btnA" type="submit" class="btn btn-success d-none">Guardar</button>
+								</div>
+							</div>
+						</form>
+						<br>
+						<div id="errorCreaA" class="alert alert-danger d-none" role="alert">Error al Actualizar el Producto, datos duplicados o incorrectos, intente nuevamente.</div>
+						<div id="okCreaA" class="alert alert-success d-none" role="alert">Producto Actualizado Exitosamente</div>
+					</div>
+					<!-- tab Borrar -->
+					<div class="tab-pane fade" id="borrarProd" role="tabpanel"
+						aria-labelledby="borrar-tab">
+						<p class="mnb-4">Seleccione el Producto a Borrar:</p>
+						<br>
+						<div id="productosinfoBorrar"></div>
 					</div>
 				</div>
 			</div>
-			<footer class="rui-footer">
-				<div class="container-fluid">
-					<p class="mb-0">2021 &copy; UnBosque</p>
-				</div>
-			</footer>
 		</div>
+		<footer class="rui-footer">
+			<div class="container-fluid">
+				<p class="mb-0">2021 &copy; UnBosque</p>
+			</div>
+		</footer>
+	</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><span class="icon-stack">
+  <i class="icon-circle icon-stack-base"></i>
+  <i class="icon-warning-sign icon-light icon-warning"></i>
+</span> Producto Eliminado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>Se elimino el Producto Correctamente</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-brand" onclick="loadproductosBorrar()" data-dismiss="modal">Continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
 
-		<script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-		<script src="./assets/vendor/popper.js/dist/umd/popper.min.js"></script>
-		<script src="./assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-		<script src="./assets/vendor/feather-icons/dist/feather.min.js"></script>
-		<script
-			src="./assets/vendor/overlayscrollbars/js/jquery.overlayScrollbars.min.js"></script>
-		<script src="./assets/js/yaybar.js"></script>
-		<script src="./assets/vendor/object-fit-images/dist/ofi.min.js"></script>
-		<script src="./assets/vendor/fancybox/dist/jquery.fancybox.min.js"></script>
-		<script src="./assets/vendor/emojione/lib/js/emojione.min.js"></script>
-		<script src="./assets/vendor/emojionearea/dist/emojionearea.min.js"></script>
-		<script src="./assets/vendor/moment/min/moment.min.js"></script>
-		<script src="./assets/vendor/swiper/swiper-bundle.min.js"></script>
-		<script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-		<script src="./assets/vendor/chartist/dist/chartist.min.js"></script>
-		<script src="./assets/vendor/jqvmap/dist/jquery.vmap.min.js"></script>
-		<script src="./assets/vendor/jqvmap/dist/maps/jquery.vmap.usa.js"></script>
-		<script src="./assets/js/rootui.js"></script>
-		<script src="./assets/js/rootui-init.js"></script>
+	<script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+	<script src="./assets/vendor/popper.js/dist/umd/popper.min.js"></script>
+	<script src="./assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="./assets/vendor/feather-icons/dist/feather.min.js"></script>
+	<script
+		src="./assets/vendor/overlayscrollbars/js/jquery.overlayScrollbars.min.js"></script>
+	<script src="./assets/js/yaybar.js"></script>
+	<script src="./assets/vendor/object-fit-images/dist/ofi.min.js"></script>
+	<script src="./assets/vendor/fancybox/dist/jquery.fancybox.min.js"></script>
+	<script src="./assets/vendor/emojione/lib/js/emojione.min.js"></script>
+	<script src="./assets/vendor/emojionearea/dist/emojionearea.min.js"></script>
+	<script src="./assets/vendor/moment/min/moment.min.js"></script>
+	<script src="./assets/vendor/swiper/swiper-bundle.min.js"></script>
+	<script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+	<script src="./assets/vendor/chartist/dist/chartist.min.js"></script>
+	<script src="./assets/vendor/jqvmap/dist/jquery.vmap.min.js"></script>
+	<script src="./assets/vendor/jqvmap/dist/maps/jquery.vmap.usa.js"></script>
+	<script src="./assets/js/rootui.js"></script>
+	<script src="./assets/js/rootui-init.js"></script>
 </body>
 </html>
+
+
+
+						
