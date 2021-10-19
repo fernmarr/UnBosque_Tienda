@@ -69,7 +69,7 @@ public class ClienteDAO {
 		try {
 			//prepare la sentencia en la base de datos
 			PreparedStatement consulta = conex.getConnection()
-					.prepareStatement("SELECT * FROM tiendagenerica.clientes where cedula_cliente = ? ");		
+					.prepareStatement("SELECT * FROM clientes where cedula_cliente = ? ");		
 			// se cambia el comodin ? por el dato que ha llegado en el parametro de la funcion
 			consulta.setString(1, cedula_cliente);			
 			//ejecute la sentencia
@@ -121,7 +121,7 @@ public class ClienteDAO {
 
 		try {
 			//prepare la sentencia en la base de datos
-			PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM tiendagenerica.clientes");
+			PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM clientes");
 			
 			//ejecute la sentencia
 			ResultSet res = consulta.executeQuery();
@@ -173,7 +173,7 @@ public class ClienteDAO {
 			Statement consulta = conex.getConnection().createStatement();
 			
 			//preparando sentencia a realizar
-			String sentencia = "delete from tiendagenerica.clientes where cedula_cliente=" + cedula_cliente + ";";
+			String sentencia = "delete from clientes where cedula_cliente=" + cedula_cliente + ";";
 			
 			//impresion de verificación
 			System.out.println("Registrado " + sentencia);
@@ -211,7 +211,7 @@ public class ClienteDAO {
 			Statement estatuto = conex.getConnection().createStatement();
 			
 			//String con la sentencia a ejecutar
-			String sentencia = "UPDATE tiendagenerica.clientes "
+			String sentencia = "UPDATE clientes "
 					+ "SET cedula_cliente = '"+cliente.getCedula_cliente()+"',"
 					+ "nombre_cliente = '"+cliente.getNombre_cliente()+"',"
 					+ "direccion_cliente = '"+cliente.getDireccion_cliente()+"',"

@@ -7,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Tienda Gen�rica</title>
+<title>Tienda Gen&eacute;rica</title>
 <meta name="description"
 	content="RootUI - clean and powerful solution for your Dashboards, Administration areas.">
 <meta name="keywords"
@@ -32,8 +32,12 @@
 <link rel="stylesheet" href="./assets/vendor/jqvmap/dist/jqvmap.css">
 <link rel="stylesheet" href="./assets/css/rootui.css">
 <link rel="stylesheet" href="./assets/css/rootui-night.css"
-	media="(night)" class="rui-nightmode-link">
+	media="all" class="rui-nightmode-link">
 <link rel="stylesheet" href="./assets/css/custom.css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+<script src="./assets/js/reportes.js"></script>
+
 </head>
 <body data-spy="scroll" data-target=".rui-page-sidebar"
 	data-offset="140"
@@ -58,7 +62,7 @@
 					<li><a href="ventas.jsp"><span class="yay-icon"><span
 								data-feather="send" class="rui-icon rui-icon-stroke-1_5"></span></span>
 							<span>Ventas</span> <span class="rui-yaybar-circle"></span></a></li>
-					<li><a href="reportes.jsp"><span class="yay-icon"><span
+					<li><a href="reportes.jsp" onclick="reporteusuarios()"><span class="yay-icon"><span
 								data-feather="layers" class="rui-icon rui-icon-stroke-1_5"></span></span>
 							<span>Reportes</span> <span class="rui-yaybar-circle"></span></a></li>
 				</ul>
@@ -86,7 +90,7 @@
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
 							src="./assets/images/avatar-1.png" alt=""></a>
 						<ul class="nav dropdown-menu">
-							<li><a href="index.html" class="nav-link"><span
+							<li><a href="/" class="nav-link"><span
 									data-feather="log-out" class="rui-icon rui-icon-stroke-1_5"></span>
 									<span>Salir</span> <span class="rui-nav-circle"></span></a></li>
 						</ul></li>
@@ -102,16 +106,12 @@
 				type="button" aria-label="Toggle side navigation">
 				<span></span>
 			</button>
-			<a class="rui-navbar-logo mr-auto" href="dashboard.html"><img
-				src="./assets/images/logo.svg"
-				data-src-night="./assets/images/logo-white.svg"
-				data-src-day="./assets/images/logo.svg" alt="" width="45"></a>
 			<div class="dropdown dropdown-triangle">
 				<a class="dropdown-item rui-navbar-avatar" href="#"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
 					src="./assets/images/avatar-1.png" alt=""></a>
 				<ul class="dropdown-menu nav">
-					<li><a href="profile.html" class="nav-link"><span
+					<li><a href="/" class="nav-link"><span
 							data-feather="log-out" class="rui-icon rui-icon-stroke-1_5"></span>
 							<span>Salir</span> <span class="rui-nav-circle"></span></a></li>
 				</ul>
@@ -129,175 +129,83 @@
 			<div class="container-fluid">
 				<!-- tabs header -->
 				<ul class="nav nav-tabs" role="tablist">
-					<li class="nav-item"><a class="nav-link active" id="home-tab"
-						data-toggle="tab" href="#usuarios" role="tab" aria-controls="home"
+					<li class="nav-item"><a class="nav-link active" onclick="reporteusuarios()" id="listUser-tab"
+						data-toggle="tab" href="#listUser" role="tab" aria-controls="listUser"
 						aria-selected="true">Listado de Usuarios</a></li>
-					<li class="nav-item"><a class="nav-link" id="profile-tab"
-						data-toggle="tab" href="#clientes" role="tab"
-						aria-controls="profile" aria-selected="false">Listado de Clientes</a></li>
-					<li class="nav-item"><a class="nav-link" id="contact-tab"
-						data-toggle="tab" href="#ventas" role="tab"
-						aria-controls="contact" aria-selected="false">Ventas por Cliente</a></li>	
-					
+					<li class="nav-item"><a class="nav-link" onclick="reporteclientes()" id="listClient-tab"
+						data-toggle="tab" href="#listClient" role="tab" aria-controls="listClient" aria-selected="false">Listado de Clientes</a></li>
+					<li class="nav-item"><a class="nav-link" onclick="reporteventas()" id="ventasUser-tab"
+						data-toggle="tab" href="#ventasUser" role="tab"
+						aria-controls="ventasUser" aria-selected="false">Ventas por Cliente</a></li>
 				</ul>
 				<!-- tabs content -->
 				<div class="tab-content">
-					<!-- tab Crear -->
-					<div class="tab-pane fade show active" id="usuarios" role="tabpanel"
-						aria-labelledby="home-tab">
-						<p class="mnb-4">Reporte de Usuarios:</p>
+					<!-- tab Listado de Usuarios -->
+					<div class="tab-pane fade show active" id="listUser" role="tabpanel"
+						aria-labelledby="listUser-tab">
+						<p class="mnb-4">Usuarios</p>
 						<br>
-							<table class="table table-striped table-dark">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Cédula</th>
-									<th scope="col">Email</th>
-									<th scope="col">Nombre</th>
-									<th scope="col">Usuario</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>1111</td>
-									<td>@mdo</td>
-									<td>qweqweqw</td>
-									<td>ddsfd</td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>2222</td>
-									<td>@fat</td>
-									<td>dsfsd dsfs</td>
-									<td>dsfsd</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Larry</td>
-									<td>@twitter</td>
-									<td>fsdf fdsfsd</td>
-									<td>fsdf</td>
-								</tr>
-							</tbody>
-						</table>
+							<div class="table-responsive-md" id="listUserInfo"></div>
 						<br>
-						<div class="alert alert-danger" role="alert">Mensaje</div>
 					</div>
-					<!-- tab Crear -->
-					<div class="tab-pane fade" id="clientes" role="tabpanel"
-						aria-labelledby="home-tab2">
-						<p class="mnb-4">Reporte de Clientes</p>
+					<!-- tab Listado de Clientes -->
+					<div class="tab-pane fade" id="listClient" role="tabpanel"
+						aria-labelledby="listClient-tab">
+						<p class="mnb-4">Clientes</p>
 						<br>
-							<table class="table table-striped table-dark">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Cédula</th>
-									<th scope="col">Email</th>
-									<th scope="col">Nombre</th>
-									<th scope="col">Usuario</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>1111</td>
-									<td>@mdo</td>
-									<td>qweqweqw</td>
-									<td>ddsfd</td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>2222</td>
-									<td>@fat</td>
-									<td>dsfsd dsfs</td>
-									<td>dsfsd</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Larry</td>
-									<td>@twitter</td>
-									<td>fsdf fdsfsd</td>
-									<td>fsdf</td>
-								</tr>
-							</tbody>
-						</table>
+							<div class="table-responsive-md" id="listClientInfo"></div>
 						<br>
-						<div class="alert alert-danger" role="alert">Mensaje 2</div>
 					</div>
-					<!-- tab Crear -->
-					<div class="tab-pane fade" id="ventas" role="tabpanel"
-						aria-labelledby="home-tab3">
-						<p class="mnb-4">Reporte de Ventas</p>
+					<!-- tab Ventas por Cliente -->
+					<div class="tab-pane fade" id="ventasUser" role="tabpanel"
+						aria-labelledby="ventasUser-tab">
+						<p class="mnb-4">Ventas</p>
 						<br>
-							<table class="table table-striped table-dark">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Cédula</th>
-									<th scope="col">Email</th>
-									<th scope="col">Nombre</th>
-									<th scope="col">Usuario</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>1111</td>
-									<td>@mdo</td>
-									<td>qweqweqw</td>
-									<td>ddsfd</td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>2222</td>
-									<td>@fat</td>
-									<td>dsfsd dsfs</td>
-									<td>dsfsd</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Larry</td>
-									<td>@twitter</td>
-									<td>fsdf fdsfsd</td>
-									<td>fsdf</td>
-								</tr>
-							</tbody>
-						</table>
+						<div class="table-responsive-md" id="ventasUserInfo"></div>
+						<div class="row pt-10 d-flex flex-row-reverse">
+							<div class="col-md-3 text-right">
+								<div class="input-group input-group-sm mb-3">
+									<span class="input-group-text">Total Ventas $</span>
+									<input disabled type="text" class="form-control" id="valcompleto">
+								</div>
+							</div>
+						</div>
 						<br>
-						<div class="alert alert-danger" role="alert">Mensaje 3</div>
 					</div>
 				</div>
 			</div>
-			<footer class="rui-footer">
-				<div class="container-fluid">
-					<p class="mb-0">2021 &copy; UnBosque</p>
-				</div>
-			</footer>
 		</div>
+		<footer class="rui-footer">
+			<div class="container-fluid">
+				<p class="mb-0">2021 &copy; UnBosque</p>
+			</div>
+		</footer>
+	</div>
 
 
 
 
-		<script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
-		<script src="./assets/vendor/popper.js/dist/umd/popper.min.js"></script>
-		<script src="./assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-		<script src="./assets/vendor/feather-icons/dist/feather.min.js"></script>
-		<script
-			src="./assets/vendor/overlayscrollbars/js/jquery.overlayScrollbars.min.js"></script>
-		<script src="./assets/js/yaybar.js"></script>
-		<script src="./assets/vendor/object-fit-images/dist/ofi.min.js"></script>
-		<script src="./assets/vendor/fancybox/dist/jquery.fancybox.min.js"></script>
-		<script src="./assets/vendor/emojione/lib/js/emojione.min.js"></script>
-		<script src="./assets/vendor/emojionearea/dist/emojionearea.min.js"></script>
-		<script src="./assets/vendor/moment/min/moment.min.js"></script>
-		<script src="./assets/vendor/swiper/swiper-bundle.min.js"></script>
-		<script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
-		<script src="./assets/vendor/chartist/dist/chartist.min.js"></script>
-		<script src="./assets/vendor/jqvmap/dist/jquery.vmap.min.js"></script>
-		<script src="./assets/vendor/jqvmap/dist/maps/jquery.vmap.usa.js"></script>
-		<script src="./assets/js/rootui.js"></script>
-		<script src="./assets/js/rootui-init.js"></script>
+
+	<script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+	<script src="./assets/vendor/popper.js/dist/umd/popper.min.js"></script>
+	<script src="./assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="./assets/vendor/feather-icons/dist/feather.min.js"></script>
+	<script
+		src="./assets/vendor/overlayscrollbars/js/jquery.overlayScrollbars.min.js"></script>
+	<script src="./assets/js/yaybar.js"></script>
+	<script src="./assets/vendor/object-fit-images/dist/ofi.min.js"></script>
+	<script src="./assets/vendor/fancybox/dist/jquery.fancybox.min.js"></script>
+	<script src="./assets/vendor/emojione/lib/js/emojione.min.js"></script>
+	<script src="./assets/vendor/emojionearea/dist/emojionearea.min.js"></script>
+	<script src="./assets/vendor/moment/min/moment.min.js"></script>
+	<script src="./assets/vendor/swiper/swiper-bundle.min.js"></script>
+	<script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+	<script src="./assets/vendor/chartist/dist/chartist.min.js"></script>
+	<script src="./assets/vendor/jqvmap/dist/jquery.vmap.min.js"></script>
+	<script src="./assets/vendor/jqvmap/dist/maps/jquery.vmap.usa.js"></script>
+	<script src="./assets/js/rootui.js"></script>
+	<script src="./assets/js/rootui-init.js"></script>
+
+
 </body>
 </html>

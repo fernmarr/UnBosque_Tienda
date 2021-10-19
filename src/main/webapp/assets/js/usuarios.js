@@ -1,11 +1,15 @@
 
 		// Crear Usuario
 		function enviar() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			var x = document.getElementById("user").value;
 			var y = document.getElementById("cedula_usuario").value;
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarusuarios', false);
+			req.open('GET', baseUrl+'//listarusuarios', false);
 			req.send(null);
 			var usuarios = null;
 			if (req.status == 200)
@@ -42,7 +46,7 @@
 				formData.append("usuario",
 						document.getElementById("user").value);
 				var xhr = new XMLHttpRequest();
-				xhr.open("POST", "http://localhost:8080/registrarusuario");
+				xhr.open("POST", baseUrl+'//registrarusuario');
 
 				var element = document.getElementById("errorCrea");
 				element.classList.add("d-none");
@@ -81,14 +85,18 @@
 		
 
 		// Listar usuarios
-		var baseurl = "http://localhost:8080/listarusuarios";
+		
 		function loadusuarios() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.open("GET", baseurl, true);
+			xmlhttp.open("GET", baseUrl+'//listarusuarios', true);
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 					var usuarios = JSON.parse(xmlhttp.responseText);
-					var tbltop = "<table class='table table-striped table-dark'><thead><tr><th scope='col'>C&eacute;dula</th><th scope='col'>Email</th><th scope='col'>Nombre</th><th scope='col'>Usuario</th></tr></thead><tbody>";
+					var tbltop = "<table class='table table-hover'><thead><tr><th scope='col'>C&eacute;dula</th><th scope='col'>Email</th><th scope='col'>Nombre</th><th scope='col'>Usuario</th></tr></thead><tbody>";
 					var main = "";
 					for (i = 0; i < usuarios.length; i++) {
 						main += "<tr><td>" + usuarios[i].cedula_usuario
@@ -107,12 +115,14 @@
 		
 		// Consultar usuario x cédula		
 		function consultarUsuario() {
-
+			
+				var getUrl = window.location;
+				var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
 				
 				var req = new XMLHttpRequest();
 				var coincidencia = false;
 				var cedula_usuarioA=   document.getElementById("cedula_usuarioA").value;
-				req.open('GET', 'http://localhost:8080/consultarusuario?cedula_usuario='+cedula_usuarioA, false);
+				req.open('GET', baseUrl+'//consultarusuario?cedula_usuario='+cedula_usuarioA, false);
 				req.send(null);
 				var usuario = null;
 				if (req.status == 200)
@@ -153,35 +163,21 @@
 
 		// Actualizar Usuario
 		function actualizarUsuario() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			var x = document.getElementById("usuarioA").value;
-			var y = document.getElementById("cedula_usuarioA").value;
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarusuarios', false);
+			req.open('GET', baseUrl+'//listarusuarios', false);
 			req.send(null);
 			var usuarios = null;
 			if (req.status == 200)
 				usuarios = JSON.parse(req.responseText);
 			console.log(JSON.parse(req.responseText));
 
-			for (i = 0; i < usuarios.length; i++) {
-				console.log(usuarios[i].usuario);
-				console.log(usuarios[i].cedula_usuario);
-				if (usuarios[i].usuario === x) {
-					console.log(usuarios[i].usuario + " " + x);
-					coincidencia = true
-					break;
-				}
-
-				if (usuarios[i].cedula_usuario === y) {
-					console.log(usuarios[i].cedula_usuario + " " + y);
-					coincidencia = true
-					break;
-				}
-			}
-			console.log(coincidencia);
-
-			if (coincidencia != false) {
+			
 				var formData = new FormData();
 				formData.append("cedula_usuario", document
 						.getElementById("cedula_usuarioA").value);
@@ -194,7 +190,7 @@
 				formData.append("usuario",
 						document.getElementById("usuarioA").value);
 				var xhr = new XMLHttpRequest();
-				xhr.open("PUT", "http://localhost:8080/actualizarusuarios");
+				xhr.open("PUT", baseUrl+'//actualizarusuarios');
 
 				var element = document.getElementById("errorCreaA");
 				element.classList.add("d-none");
@@ -210,20 +206,7 @@
 				document.getElementById("usuarioA").value = "";
 				xhr.send(formData);
 
-			} else {
-				var element = document.getElementById("errorA");
-				element.classList.remove("d-none");
-				var element2 = document.getElementById("okCreaA");
-				element2.classList.add("d-none");
-				var element3 = document.getElementById("btnA");
-				element3.classList.add("d-none");
-				
-				document.getElementById("cedula_usuarioA").value = "";
-				document.getElementById("email_usuarioA").value = "";
-				document.getElementById("nombre_usuarioA").value = "";
-				document.getElementById("passwordA").value = "";
-				document.getElementById("usuarioA").value = "";
-			}
+			
 		}
 		
 		// Ocultar mensajes de error al buscar y actualizar
@@ -242,14 +225,18 @@
 		
 		
 		// Borrar - Listar usuarios para Borrar
-		var baseurl = "http://localhost:8080/listarusuarios";
+		
 		function loadusuariosBorrar() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.open("GET", baseurl, true);
+			xmlhttp.open("GET", baseUrl+'//listarusuarios', true);
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 					var usuarios = JSON.parse(xmlhttp.responseText);
-					var tbltop = "<table class='table table-striped table-dark'><thead><tr><th scope='col'>C&eacute;dula</th><th scope='col'>Email</th><th scope='col'>Nombre</th><th scope='col'>Usuario</th><th scope='col'>Borrar</th></tr></thead><tbody>";
+					var tbltop = "<table class='table table-hover'><thead><tr><th scope='col'>C&eacute;dula</th><th scope='col'>Email</th><th scope='col'>Nombre</th><th scope='col'>Usuario</th><th scope='col'>Borrar</th></tr></thead><tbody>";
 					var main = "";
 					for (i = 0; i < usuarios.length; i++) {
 						main += "<tr><td>" + usuarios[i].cedula_usuario
@@ -270,11 +257,15 @@
 		
 		//Eliminar Usuario
 		function eliminar(id) {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			//var y = document.getElementById("cedula_usuario").value;
 			var y = id;
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarusuarios', false);
+			req.open('GET', baseUrl+'//listarusuarios', false);
 			req.send(null);
 			var usuarios = null;
 			if (req.status == 200)
@@ -297,7 +288,7 @@
 				var cedula = id;
 				
 				var xhr = new XMLHttpRequest();
-				xhr.open("DELETE", "http://localhost:8080/eliminarusuario?cedula_usuario="+cedula);
+				xhr.open('DELETE', baseUrl+'//eliminarusuario?cedula_usuario='+cedula);
 						
 				xhr.send();
 

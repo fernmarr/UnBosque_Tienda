@@ -69,7 +69,7 @@ public class ProveedorDAO {
 		try {
 			//prepare la sentencia en la base de datos
 			PreparedStatement consulta = conex.getConnection()
-					.prepareStatement("SELECT * FROM tiendagenerica.proveedores where nitproveedor = ? ");		
+					.prepareStatement("SELECT * FROM proveedores where nitproveedor = ? ");		
 			// se cambia el comodin ? por el dato que ha llegado en el parametro de la funcion
 			consulta.setString(1, nitproveedor);			
 			//ejecute la sentencia
@@ -121,7 +121,7 @@ public class ProveedorDAO {
 
 		try {
 			//prepare la sentencia en la base de datos
-			PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM tiendagenerica.proveedores");
+			PreparedStatement consulta = conex.getConnection().prepareStatement("SELECT * FROM proveedores");
 			
 			//ejecute la sentencia
 			ResultSet res = consulta.executeQuery();
@@ -173,7 +173,7 @@ public class ProveedorDAO {
 			Statement consulta = conex.getConnection().createStatement();
 			
 			//preparando sentencia a realizar
-			String sentencia = "delete from tiendagenerica.proveedores where nitproveedor=" + nitproveedor + ";";
+			String sentencia = "delete from proveedores where nitproveedor=" + nitproveedor + ";";
 			
 			//impresion de verificación
 			System.out.println("Registrado " + sentencia);
@@ -211,7 +211,7 @@ public class ProveedorDAO {
 			Statement estatuto = conex.getConnection().createStatement();
 			
 			//String con la sentencia a ejecutar
-			String sentencia = "UPDATE tiendagenerica.proveedores "
+			String sentencia = "UPDATE proveedores "
 					+ "SET nitproveedor = '"+proveedor.getNitproveedor()+"',"
 					+ "ciudad_proveedor = '"+proveedor.getCiudad_proveedor()+"',"
 					+ "direccion_proveedor = '"+proveedor.getDireccion_proveedor()+"',"

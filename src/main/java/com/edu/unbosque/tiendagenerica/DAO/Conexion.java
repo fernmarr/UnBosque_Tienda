@@ -6,24 +6,27 @@ import java.sql.SQLException;
 
 public class Conexion {
 	
-	/** Parametros de conexion */
+	/** Parametros de conexion DESARROLLO - LOCALHOST */
 	static String nombre_base_datos = "tiendagenerica";
-	//root
 	static String usuariobd = "admin";
-	//mintic
 	static String clavebd = "admin123";
-	//127.0.0.1 == localhost
 	static String url = "jdbc:mysql://127.0.0.1/" + nombre_base_datos;
 	
+	
+	/** Parametros de conexion TEMPORAL - HOSTING*/
+	//static String nombre_base_datos = "u946725276_tiendagenerica";
+	//static String usuariobd = "u946725276_admin";
+	//static String clavebd = "Motorol@+1";
+	//static String url = "jdbc:mysql://sql185.main-hosting.eu/" + nombre_base_datos;
+	
 
-	/** Parametros de conexion */
+	/** Parametros de conexion PRODUCCIÓN AWS */
 	//static String nombre_base_datos = "g38e8";
-	//root
 	//static String usuariobd = "admin";
-	//mintic
 	//static String clavebd = "minticroca";
-	//127.0.0.1 == localhost
 	//static String url = "jdbc:mysql://tiendasgenericasdr-g9-g38-53.czo3ixoe3xoe.us-east-1.rds.amazonaws.com/" + nombre_base_datos;
+	
+	
 	
 	//objeto sin inicializar de la conexión
 	Connection connection = null;

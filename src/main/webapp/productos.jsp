@@ -31,14 +31,14 @@
 <link rel="stylesheet" href="./assets/vendor/chartist/dist/chartist.css">
 <link rel="stylesheet" href="./assets/vendor/jqvmap/dist/jqvmap.css">
 <link rel="stylesheet" href="./assets/css/rootui.css">
-<link rel="stylesheet" href="./assets/css/rootui-night.css"
-	media="all" class="rui-nightmode-link">
+<link rel="stylesheet" href="./assets/css/rootui-night.css" media="all"
+	class="rui-nightmode-link">
 <link rel="stylesheet" href="./assets/css/custom.css">
-<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<link
+	href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+	rel="stylesheet">
 
 <script src="./assets/js/productos.js"></script>
-
-
 </head>
 <body data-spy="scroll" data-target=".rui-page-sidebar"
 	data-offset="140"
@@ -63,7 +63,7 @@
 					<li><a href="ventas.jsp"><span class="yay-icon"><span
 								data-feather="send" class="rui-icon rui-icon-stroke-1_5"></span></span>
 							<span>Ventas</span> <span class="rui-yaybar-circle"></span></a></li>
-					<li><a href="reportes.jsp"><span class="yay-icon"><span
+					<li><a href="reportes.jsp" onclick="reporteusuarios()"><span class="yay-icon"><span
 								data-feather="layers" class="rui-icon rui-icon-stroke-1_5"></span></span>
 							<span>Reportes</span> <span class="rui-yaybar-circle"></span></a></li>
 				</ul>
@@ -130,61 +130,68 @@
 			<div class="container-fluid">
 				<!-- tabs header -->
 				<ul class="nav nav-tabs" role="tablist">
-					<li class="nav-item"><a class="nav-link active" id="cargar-prod"
-						data-toggle="tab" href="#cargarProd" role="tab" aria-controls="cargar"
-						aria-selected="true">Cargar Productos</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						id="cargar-prod" data-toggle="tab" href="#cargarProd" role="tab"
+						aria-controls="cargar" aria-selected="true">Cargar Productos</a></li>
 					<li class="nav-item"><a class="nav-link" id="crear-prod"
-						data-toggle="tab" href="#crearProd" role="tab" aria-controls="crear"
-						aria-selected="true">Crear Producto</a></li>
+						data-toggle="tab" href="#crearProd" role="tab"
+						aria-controls="crear" aria-selected="true">Crear Producto</a></li>
 					<li class="nav-item"><a class="nav-link" id="consultar-prod"
-						data-toggle="tab" href="#consultarProd" onclick="loadproductos()" role="tab"
-						aria-controls="consultar" aria-selected="false">Consultar
+						data-toggle="tab" href="#consultarProd" onclick="loadproductos()"
+						role="tab" aria-controls="consultar" aria-selected="false">Consultar
 							Productos</a></li>
 					<li class="nav-item"><a class="nav-link" id="actualizar-prod"
 						data-toggle="tab" href="#actualizarProd" role="tab"
 						aria-controls="actualizar" aria-selected="false">Actualizar
 							Producto</a></li>
 					<li class="nav-item"><a class="nav-link" id="borrar-prod"
-						data-toggle="tab" href="#borrarProd" onclick="loadproductosBorrar()" role="tab"
-						aria-controls="borrar" aria-selected="false">Borrar Producto</a></li>
+						data-toggle="tab" href="#borrarProd"
+						onclick="loadproductosBorrar()" role="tab" aria-controls="borrar"
+						aria-selected="false">Borrar Producto</a></li>
 				</ul>
 				<!-- tabs content -->
 				<div class="tab-content">
 					<!-- tab Cargar -->
-					<div class="tab-pane fade show active" id="cargarProd" role="tabpanel"
-						aria-labelledby="cargar-tab">
+					<div class="tab-pane fade show active" id="cargarProd"
+						role="tabpanel" aria-labelledby="cargar-tab">
 						<p class="mnb-4">Seleccione el archivo a cargar:</p>
 						<br>
 						<form id="form1">
-							<div>
-								<label for="formFileLg" class="form-label">Seleccionar
-									archivo CSV con el inventario de productos</label>
-									<input
-									class="form-control form-control-lg" id="archivo"
-									type="file" accept=".csv">
-									
-								<button type="button" class="btn btn-success"
-									onclick="subirArchivo()">Subir archivo</button>
-							</div>
 
+							<div class="row pb-5">
+								<div class="col-md-6">
+									<input type="file" id="archivo"
+										accept=".csv" placeholder="Seleccione el archivo a cargar">
+								</div>
+							</div>
+							<div class="row mt-5">
+								<div class="col-md-4 ">
+
+
+									<button type="button" class="btn btn-success"
+										onclick="subirArchivo()">Subir archivo</button>
+								</div>
+							</div>
 						</form>
 						<br>
-						<div id="errorCargarProd" class="alert alert-danger d-none" role="alert">Error
-							al cargar el Archivo, datos duplicados o incorrectos, intente
-							nuevamente.</div>
-						<div id="okCargarProd" class="alert alert-success d-none" role="alert">Archivo
-							Cargado Exitosamente</div>
+						<div id="errorCargarProd" class="alert alert-danger d-none"
+							role="alert">Error al cargar el Archivo, datos duplicados o
+							incorrectos, intente nuevamente.</div>
+						<div id="okCargarProd" class="alert alert-success d-none"
+							role="alert">Archivo Cargado Exitosamente</div>
 					</div>
 					<!-- tab Crear -->
 					<div class="tab-pane fade show" id="crearProd" role="tabpanel"
 						aria-labelledby="crear-tab">
 						<p class="mnb-4">Ingrese los datos del Producto a crear:</p>
 						<br>
-						<form id="formCrearProd" action=javascript:;" onsubmit="enviarProd()">
+						<form id="formCrearProd" action=javascript:;
+							" onsubmit="enviarProd()">
 							<div class="row vertical-gap sm-gap">
 								<div class="col-12">
 									<input type="text" class="form-control" id="codigo_producto"
-										placeholder="C&oacute;digo Producto" required onfocus="ocultaerrorCrearProd()">
+										placeholder="C&oacute;digo Producto" required
+										onfocus="ocultaerrorCrearProd()">
 								</div>
 								<div class="col-12">
 									<input type="text" class="form-control" id="ivacompra"
@@ -212,11 +219,11 @@
 							</div>
 						</form>
 						<br>
-						<div id="errorCreaProd" class="alert alert-danger d-none" role="alert">Error
-							al crear el Producto, datos duplicados o incorrectos, intente
-							nuevamente.</div>
-						<div id="okCreaProd" class="alert alert-success d-none" role="alert">Producto
-							Creado Exitosamente</div>
+						<div id="errorCreaProd" class="alert alert-danger d-none"
+							role="alert">Error al crear el Producto, datos duplicados o
+							incorrectos, intente nuevamente.</div>
+						<div id="okCreaProd" class="alert alert-success d-none"
+							role="alert">Producto Creado Exitosamente</div>
 					</div>
 					<!-- tab Consultar -->
 					<div class="tab-pane fade" id="consultarProd" role="tabpanel"
@@ -230,17 +237,21 @@
 						aria-labelledby="actualizar-tab">
 						<p class="mnb-4">Ingrese el ID del Producto a actualizar:</p>
 						<br>
-						<form id="formActConsProd" class="#" action=javascript:;" onsubmit="actualizarProducto()">
+						<form id="formActConsProd" class="#" action=javascript:;
+							" onsubmit="actualizarProducto()">
 							<div class="row vertical-gap sm-gap">
 								<div class="col-12">
-									<input type="text" class="form-control" id="codigo_productoA"onfocus="ocultaerrorConsultar()"
+									<input type="text" class="form-control" id="codigo_productoA"
+										onfocus="ocultaerrorConsultar()"
 										placeholder="C&oacute;digo Producto" required>
 								</div>
 								<div class="col-12">
-									<button type="button" class="btn btn-info" onclick="consultarProducto()">Consultar</button>
+									<button type="button" class="btn btn-info"
+										onclick="consultarProducto()">Consultar</button>
 								</div>
 								<div class="col-12">
-									<div id="errorC" class="alert alert-danger d-none" role="alert">Error, el Producto no Existe, intente nuevamente.</div>
+									<div id="errorC" class="alert alert-danger d-none" role="alert">Error,
+										el Producto no Existe, intente nuevamente.</div>
 								</div>
 								<div class="col-12">
 									<input type="text" class="form-control" id="ivacompraA"
@@ -248,7 +259,7 @@
 								</div>
 								<div class="col-12">
 									<input type="text" class="form-control" id="nitproveedorA"
-										placeholder="NIT Proveedor" required>
+										placeholder="NIT Proveedor" disabled>
 								</div>
 								<div class="col-12">
 									<input type="text" class="form-control" id="nombre_productoA"
@@ -268,8 +279,11 @@
 							</div>
 						</form>
 						<br>
-						<div id="errorCreaA" class="alert alert-danger d-none" role="alert">Error al Actualizar el Producto, datos duplicados o incorrectos, intente nuevamente.</div>
-						<div id="okCreaA" class="alert alert-success d-none" role="alert">Producto Actualizado Exitosamente</div>
+						<div id="errorCreaA" class="alert alert-danger d-none"
+							role="alert">Error al Actualizar el Producto, datos
+							duplicados o incorrectos, intente nuevamente.</div>
+						<div id="okCreaA" class="alert alert-success d-none" role="alert">Producto
+							Actualizado Exitosamente</div>
 					</div>
 					<!-- tab Borrar -->
 					<div class="tab-pane fade" id="borrarProd" role="tabpanel"
@@ -290,28 +304,33 @@
 
 
 
-<!-- Modal -->
-<div class="modal fade" id="ModalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><span class="icon-stack">
-  <i class="icon-circle icon-stack-base"></i>
-  <i class="icon-warning-sign icon-light icon-warning"></i>
-</span> Producto Eliminado</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div>Se elimino el Producto Correctamente</div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-brand" onclick="loadproductosBorrar()" data-dismiss="modal">Continuar</button>
-            </div>
-        </div>
-    </div>
-</div>
+	<!-- Modal -->
+	<div class="modal fade" id="ModalEliminarProducto" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<span class="icon-stack"> <i
+							class="icon-circle icon-stack-base"></i> <i
+							class="icon-warning-sign icon-light icon-warning"></i>
+						</span> Producto Eliminado
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div>Se elimino el Producto Correctamente</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-brand"
+						onclick="loadproductosBorrar()" data-dismiss="modal">Continuar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -340,4 +359,4 @@
 
 
 
-						
+

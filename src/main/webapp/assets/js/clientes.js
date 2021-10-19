@@ -1,13 +1,17 @@
 
 		// Crear Cliente
 		function enviarCli() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			var x = document.getElementById("cedula_cliente").value;
 			var y = document.getElementById("email_cliente").value;
 			console.log(x);
 			console.log(y);
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarclientes', false);
+			req.open('GET', baseUrl+'//listarclientes', false);
 			req.send(null);
 			var clientes = null;
 			if (req.status == 200)
@@ -82,16 +86,21 @@
 		}
 
 		// Listar Clientes
-		var baseurl3 = "http://localhost:8080/listarclientes";
-		console.log(baseurl3);
+		
 		function loadclientes() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			//var baseurl3 = baseUrl+'//listarclientes';
+			console.log('esta es la URL:'+baseUrl);
+			
 			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.open("GET", baseurl3, true);
+			xmlhttp.open("GET", baseUrl+'//listarclientes', true);
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 					var clientes = JSON.parse(xmlhttp.responseText);
 					console.log(clientes);
-					var tbltop = "<table class='table table-striped table-dark'><thead><tr><th scope='col'>C&eacute;dula</th><th scope='col'>Nombre</th><th scope='col'>Dirección</th><th scope='col'>Teléfono</th><th scope='col'>Email</th></tr></thead><tbody>";
+					var tbltop = "<table class='table table-striped table-dark'><thead><tr><th scope='col'>C&eacute;dula</th><th scope='col'>Nombre</th><th scope='col'>Direcci&oacute;n</th><th scope='col'>Tel&eacute;fono</th><th scope='col'>Email</th></tr></thead><tbody>";
 					var main = "";
 					for (i = 0; i < clientes.length; i++) {
 						main += "<tr><td>" + clientes[i].cedula_cliente
@@ -112,11 +121,13 @@
 		// Consultar Cliente x cédula		
 		function consultarCliente() {
 
+				var getUrl = window.location;
+				var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
 				
 				var req = new XMLHttpRequest();
 				var coincidencia = false;
 				var cedula_clienteA = document.getElementById("cedula_clienteA").value;
-				req.open('GET', 'http://localhost:8080/consultarcliente?cedula_cliente='+cedula_clienteA, false);
+				req.open('GET', baseUrl+'//consultarcliente?cedula_cliente='+cedula_clienteA, false);
 				req.send(null);
 				var clienteA = null;
 				if (req.status == 200)
@@ -157,35 +168,22 @@
 
 		// Actualizar Cliente
 		function actualizarCliente() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			var x = document.getElementById("cedula_clienteA").value;
-			var y = document.getElementById("email_clienteA").value;
+			//var y = document.getElementById("email_clienteA").value;
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarclientes', false);
+			req.open('GET', baseUrl+'//listarclientes', false);
 			req.send(null);
 			var clientesA = null;
 			if (req.status == 200)
 				clientesA = JSON.parse(req.responseText);
 			console.log(JSON.parse(req.responseText));
 
-			for (i = 0; i < clientesA.length; i++) {
-				console.log(clientesA[i].cedula_cliente);
-				
-				if (clientesA[i].cedula_cliente === x) {
-					console.log(clientesA[i].cedula_cliente + " " + x);
-					coincidencia = true
-					break;
-				}
-				
-				if (clientesA[i].email_cliente === y) {
-					console.log(clientesA[i].email_cliente + " " + y);
-					coincidencia = true
-					break;
-				}
-			}
-			console.log(coincidencia);
-
-			if (coincidencia != false) {
+			
 				var formData = new FormData();
 				formData.append("cedula_cliente", document
 						.getElementById("cedula_clienteA").value);
@@ -198,7 +196,7 @@
 				formData.append("email_cliente",
 						document.getElementById("email_clienteA").value);
 				var xhr = new XMLHttpRequest();
-				xhr.open("PUT", "http://localhost:8080/actualizarCliente");
+				xhr.open("PUT", baseUrl+'//actualizarCliente');
 
 				var element7 = document.getElementById("errorCreaA");
 				element7.classList.add("d-none");
@@ -214,20 +212,7 @@
 				document.getElementById("email_clienteA").value = "";
 				xhr.send(formData);
 
-			} else {
-				var element7 = document.getElementById("errorCreaA");
-				element7.classList.remove("d-none");
-				var element8 = document.getElementById("okCreaA");
-				element8.classList.add("d-none");
-				var element9 = document.getElementById("btnA");
-				element9.classList.add("d-none");
-				
-				document.getElementById("cedula_clienteA").value = "";
-				document.getElementById("nombre_clienteA").value = "";
-				document.getElementById("direccion_clienteA").value = "";
-				document.getElementById("telefono_clienteA").value = "";
-				document.getElementById("email_clienteA").value = "";
-			}
+			
 		}
 		
 		// Ocultar mensajes de error al buscar y actualizar
@@ -245,8 +230,13 @@
 		}
 		
 		// Borrar - Listar Clientes para Borrar
-		var baseurlE = "http://localhost:8080/listarclientes";
+		
 		function loadclientesBorrar() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
+			var baseurlE = baseUrl+'//listarclientes';
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.open("GET", baseurlE, true);
 			xmlhttp.onreadystatechange = function() {
@@ -274,11 +264,15 @@
 		
 		//Eliminar Usuario
 		function eliminarcliente(id) {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			//var y = document.getElementById("cedula_cliente").value;
 			var y = id;
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarclientes', false);
+			req.open('GET', baseUrl+'//listarclientes', false);
 			req.send(null);
 			var clientesE = null;
 			if (req.status == 200)
@@ -301,7 +295,7 @@
 				var cedula_cliente = id;
 				
 				var xhr = new XMLHttpRequest();
-				xhr.open("DELETE", "http://localhost:8080/eliminarcliente?cedula_cliente="+cedula_cliente);
+				xhr.open("DELETE", baseUrl+'//eliminarcliente?cedula_cliente='+cedula_cliente);
 						
 				xhr.send();
 

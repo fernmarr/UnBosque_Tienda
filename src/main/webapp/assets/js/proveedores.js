@@ -1,13 +1,17 @@
 
 		// Crear Proveedores
 		function enviarPro() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			var x = document.getElementById("nitproveedor").value;
 			var y = document.getElementById("nombre_proveedor").value;
 			console.log(x);
 			console.log(y);
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarproveedores', false);
+			req.open('GET', baseUrl+'//listarproveedores', false);
 			req.send(null);
 			var proveedores = null;
 			if (req.status == 200)
@@ -45,7 +49,7 @@
 				formData.append("telefono_proveedor",
 						document.getElementById("telefono_proveedor").value);
 				var xhr = new XMLHttpRequest();
-				xhr.open("POST", "http://localhost:8080/registrarproveedor");
+				xhr.open('POST', baseUrl+'//registrarproveedor');
 
 				var element = document.getElementById("errorCreaPro");
 				element.classList.add("d-none");
@@ -82,16 +86,21 @@
 		}
 
 		// Listar Proveedores
-		var baseurl3 = "http://localhost:8080/listarproveedores";
-		console.log(baseurl3);
+		
+		
 		function loadproveedores() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			var baseurl3 = baseUrl+'//listarproveedores';
+			
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.open("GET", baseurl3, true);
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 					var proveedores = JSON.parse(xmlhttp.responseText);
 					console.log(proveedores);
-					var tbltop = "<table class='table table-striped table-dark'><thead><tr><th scope='col'>NIT Proveedor</th><th scope='col'>Ciudad</th><th scope='col'>Direcci&oacute;n</th><th scope='col'>Nombre</th><th scope='col'>Tel&eacute;fono</th></tr></thead><tbody>";
+					var tbltop = "<table class='table table-striped'><thead><tr><th scope='col'>NIT Proveedor</th><th scope='col'>Ciudad</th><th scope='col'>Direcci&oacute;n</th><th scope='col'>Nombre</th><th scope='col'>Tel&eacute;fono</th></tr></thead><tbody>";
 					var main = "";
 					for (i = 0; i < proveedores.length; i++) {
 						main += "<tr><td>" + proveedores[i].nitproveedor
@@ -111,12 +120,14 @@
 
 		// Consultar Proveedor x NIT		
 		function consultarProveedor() {
-
+			
+				var getUrl = window.location;
+				var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
 				
 				var req = new XMLHttpRequest();
 				var coincidencia = false;
 				var nitproveedorA = document.getElementById("nitproveedorA").value;
-				req.open('GET', 'http://localhost:8080/consultarproveedor?nitproveedor='+nitproveedorA, false);
+				req.open('GET', baseUrl+'//consultarproveedor?nitproveedor='+nitproveedorA, false);
 				req.send(null);
 				var proveedorA = null;
 				if (req.status == 200)
@@ -153,35 +164,22 @@
 
 		// Actualizar Proveedor
 		function actualizarProveedor() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			var x = document.getElementById("nitproveedorA").value;
-			var y = document.getElementById("nombre_proveedorA").value;
+			
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarproveedores', false);
+			req.open('GET', baseUrl+'//listarproveedores', false);
 			req.send(null);
 			var proveedoresA = null;
 			if (req.status == 200)
 				proveedoresA = JSON.parse(req.responseText);
-			console.log(JSON.parse(req.responseText));
+				console.log(JSON.parse(req.responseText));
 
-			for (i = 0; i < proveedoresA.length; i++) {
-				console.log(proveedoresA[i].nitproveedor);
-				
-				if (proveedoresA[i].nitproveedor === x) {
-					console.log(proveedoresA[i].nitproveedor + " " + x);
-					coincidencia = true
-					break;
-				}
-				
-				if (proveedoresA[i].nombre_proveedor === y) {
-					console.log(proveedoresA[i].nombre_proveedor + " " + y);
-					coincidencia = true
-					break;
-				}
-			}
-			console.log(coincidencia);
-
-			if (coincidencia != false) {
+			
 				var formData = new FormData();
 				formData.append("nitproveedor", document
 						.getElementById("nitproveedorA").value);
@@ -194,7 +192,7 @@
 				formData.append("telefono_proveedor",
 						document.getElementById("telefono_proveedorA").value);
 				var xhr = new XMLHttpRequest();
-				xhr.open("PUT", "http://localhost:8080/actualizarproveedor");
+				xhr.open('PUT', baseUrl+'//actualizarproveedor');
 
 				var element7 = document.getElementById("errorCreaA");
 				element7.classList.add("d-none");
@@ -210,20 +208,7 @@
 				document.getElementById("telefono_proveedorA").value = "";
 				xhr.send(formData);
 
-			} else {
-				var element7 = document.getElementById("errorCreaA");
-				element7.classList.remove("d-none");
-				var element8 = document.getElementById("okCreaA");
-				element8.classList.add("d-none");
-				var element9 = document.getElementById("btnA");
-				element9.classList.add("d-none");
-				
-				document.getElementById("nitproveedorA").value = "";
-				document.getElementById("ciudad_proveedorA").value = "";
-				document.getElementById("direccion_proveedorA").value = "";
-				document.getElementById("nombre_proveedorA").value = "";
-				document.getElementById("telefono_proveedorA").value = "";
-			}
+			
 		}
 		
 		// Ocultar mensajes de error al buscar y actualizar
@@ -241,14 +226,19 @@
 		}
 		
 		// Borrar - Listar Proveedores para Borrar
-		var baseurlE = "http://localhost:8080/listarproveedores";
+		
 		function loadproveedoresBorrar() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			var baseurlE = baseUrl+'//listarproveedores';
+			
 			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.open("GET", baseurlE, true);
+			xmlhttp.open('GET', baseurlE, true);
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 					var proveedoresE = JSON.parse(xmlhttp.responseText);
-					var tbltop = "<table class='table table-striped table-dark'><thead><tr><th scope='col'>NIT Proveedor</th><th scope='col'>Ciudad</th><th scope='col'>Direcci&oacute;n</th><th scope='col'>Nombre</th><th scope='col'>Tel&eacute;fono</th><th scope='col'>Borrar</th></tr></thead><tbody>";
+					var tbltop = "<table class='table table-striped'><thead><tr><th scope='col'>NIT Proveedor</th><th scope='col'>Ciudad</th><th scope='col'>Direcci&oacute;n</th><th scope='col'>Nombre</th><th scope='col'>Tel&eacute;fono</th><th scope='col'>Borrar</th></tr></thead><tbody>";
 					var main = "";
 					for (i = 0; i < proveedoresE.length; i++) {
 						main += "<tr><td>" + proveedoresE[i].nitproveedor
@@ -270,11 +260,15 @@
 		
 		//Eliminar Proveedor
 		function eliminarproveedor(id) {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			//var y = document.getElementById("nitproveedor").value;
 			var y = id;
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarproveedores', false);
+			req.open('GET', baseUrl+'//listarproveedores', false);
 			req.send(null);
 			var proveedoresE = null;
 			if (req.status == 200)
@@ -297,7 +291,7 @@
 				var nitproveedor = id;
 				
 				var xhr = new XMLHttpRequest();
-				xhr.open("DELETE", "http://localhost:8080/eliminarproveedor?nitproveedor="+nitproveedor);
+				xhr.open('DELETE', baseUrl+'//eliminarproveedor?nitproveedor='+nitproveedor);
 						
 				xhr.send();
 

@@ -1,6 +1,9 @@
 
 			//Cargar Productos
 			function subirArchivo() {
+				
+				var getUrl = window.location;
+				var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
 	
 				try {
 	
@@ -16,8 +19,7 @@
 						var arrayLineas = text.split("\n");
 	
 						var xhr = new XMLHttpRequest();
-						xhr.open("DELETE",
-								"http://localhost:8080/eliminartodoproducto", true);
+						xhr.open('DELETE',baseUrl+'//eliminartodoproducto', true);
 						xhr.send();
 	
 						for (var i = 0; i < arrayLineas.length; i += 1) {
@@ -39,8 +41,7 @@
 							formData.append("ivacompra", arraydatos[4]);
 							formData.append("precio_venta", arraydatos[5]);
 							var xhr = new XMLHttpRequest();
-							xhr.open("POST",
-									"http://localhost:8080/registrarproducto");
+							xhr.open('POST',baseUrl+'//registrarproducto');
 	
 							xhr.send(formData);
 						}
@@ -69,13 +70,17 @@
 		
 		// Crear Productos
 		function enviarProd() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			var x = document.getElementById("codigo_producto").value;
 			var y = document.getElementById("nombre_producto").value;
 			console.log(x);
 			console.log(y);
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarproductos', false);
+			req.open('GET', baseUrl+'//listarproductos', false);
 			req.send(null);
 			var productos = null;
 			if (req.status == 200)
@@ -115,7 +120,7 @@
 				formData.append("precio_venta",
 						document.getElementById("precio_venta").value);
 				var xhr = new XMLHttpRequest();
-				xhr.open("POST", "http://localhost:8080/registrarproducto");
+				xhr.open('POST', baseUrl+'//registrarproducto');
 
 				var element = document.getElementById("errorCreaProd");
 				element.classList.add("d-none");
@@ -154,16 +159,21 @@
 		}
 
 		// Listar Productos
-		var baseurl3 = "http://localhost:8080/listarproductos";
-		console.log(baseurl3);
+		
+
 		function loadproductos() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			var baseurl3 = baseUrl+'//listarproductos';
+			
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.open("GET", baseurl3, true);
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 					var productos = JSON.parse(xmlhttp.responseText);
 					console.log(productos);
-					var tbltop = "<table class='table table-striped table-dark'><thead><tr><th scope='col'>C&oacute;digo Producto</th><th scope='col'>IVA Compra</th><th scope='col'>NIT Proveedor</th><th scope='col'>Nombre Producto</th><th scope='col'>Precio Compra</th><th scope='col'>Precio Venta</th></tr></thead><tbody>";
+					var tbltop = "<table class='table table-striped'><thead><tr><th scope='col'>C&oacute;digo Producto</th><th scope='col'>IVA Compra</th><th scope='col'>NIT Proveedor</th><th scope='col'>Nombre Producto</th><th scope='col'>Precio Compra</th><th scope='col'>Precio Venta</th></tr></thead><tbody>";
 					var main = "";
 					for (i = 0; i < productos.length; i++) {
 						main += "<tr><td>" + productos[i].codigo_producto
@@ -184,19 +194,21 @@
 
 		// Consultar Productos por x codigo_producto		
 		function consultarProducto() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
 
-				
-				var req = new XMLHttpRequest();
-				var coincidencia = false;
-				var codigo_productoA = document.getElementById("codigo_productoA").value;
-				req.open('GET', 'http://localhost:8080/consultarproducto?codigo_producto='+codigo_productoA, false);
-				req.send(null);
-				var productoA = null;
-				if (req.status == 200)
-					productoA = JSON.parse(req.responseText);
-				console.log(JSON.parse(req.responseText));
-				
-				console.log(productoA.toString());
+			var req = new XMLHttpRequest();
+			var coincidencia = false;
+			var codigo_productoA = document.getElementById("codigo_productoA").value;
+			req.open('GET', baseUrl+'//consultarproducto?codigo_producto='+codigo_productoA, false);
+			req.send(null);
+			var productoA = null;
+			if (req.status == 200)
+				productoA = JSON.parse(req.responseText);
+			console.log(JSON.parse(req.responseText));
+			
+			console.log(productoA.toString());
 				
 			if (productoA.toString()!=""){
 				
@@ -228,35 +240,22 @@
 
 		// Actualizar Producto
 		function actualizarProducto() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			var x = document.getElementById("codigo_productoA").value;
-			//var y = document.getElementById("nombre_productoA").value;
+			
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarproductos', false);
+			req.open('GET', baseUrl+'//listarproductos', false);
 			req.send(null);
 			var productosA = null;
 			if (req.status == 200)
 				productosA = JSON.parse(req.responseText);
 			console.log(JSON.parse(req.responseText));
 
-			for (i = 0; i < productosA.length; i++) {
-				console.log(productosA[i].codigo_producto);
-				
-				if (productosA[i].codigo_producto === x) {
-					console.log(productosA[i].codigo_producto + " " + x);
-					coincidencia = true
-					break;
-				}
-				
-				/*if (productosA[i].nombre_producto === y) {
-					console.log(productosA[i].nombre_producto + " " + y);
-					coincidencia = true
-					break;
-				}*/
-			}
-			console.log(coincidencia);
 
-			if (coincidencia != false) {
 				var formData = new FormData();
 				formData.append("codigo_producto", document
 						.getElementById("codigo_productoA").value);
@@ -271,7 +270,7 @@
 				formData.append("precio_venta",
 						document.getElementById("precio_ventaA").value);
 				var xhr = new XMLHttpRequest();
-				xhr.open("PUT", "http://localhost:8080/actualizarproducto");
+				xhr.open('PUT', baseUrl+'//actualizarproducto');
 
 				var element7 = document.getElementById("errorCreaA");
 				element7.classList.add("d-none");
@@ -288,21 +287,6 @@
 				document.getElementById("precio_ventaA").value = "";
 				xhr.send(formData);
 
-			} else {
-				var element7 = document.getElementById("errorCreaA");
-				element7.classList.remove("d-none");
-				var element8 = document.getElementById("okCreaA");
-				element8.classList.add("d-none");
-				var element9 = document.getElementById("btnA");
-				element9.classList.add("d-none");
-				
-				document.getElementById("codigo_productoA").value = "";
-				document.getElementById("ivacompraA").value = "";
-				document.getElementById("nitproveedorA").value = "";
-				document.getElementById("nombre_productoA").value = "";
-				document.getElementById("precio_compraA").value = "";
-				document.getElementById("precio_ventaA").value = "";
-			}
 		}
 		
 		// Ocultar mensajes de error al buscar y actualizar
@@ -320,14 +304,19 @@
 		}
 		
 		// Borrar - Listar Productos para Borrar
-		var baseurlE = "http://localhost:8080/listarproductos";
+		
 		function loadproductosBorrar() {
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			var baseurlE = baseUrl+'//listarproductos';
+			
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.open("GET", baseurlE, true);
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 					var productosE = JSON.parse(xmlhttp.responseText);
-					var tbltop = "<table class='table table-striped table-dark'><thead><tr><th scope='col'>C&oacute;digo Producto</th><th scope='col'>IVA Compra</th><th scope='col'>NIT Proveedor</th><th scope='col'>Nombre Producto</th><th scope='col'>Precio Compra</th><th scope='col'>Precio Venta</th><th scope='col'>Borrar</th></tr></thead><tbody>";
+					var tbltop = "<table class='table table-striped'><thead><tr><th scope='col'>C&oacute;digo Producto</th><th scope='col'>IVA Compra</th><th scope='col'>NIT Proveedor</th><th scope='col'>Nombre Producto</th><th scope='col'>Precio Compra</th><th scope='col'>Precio Venta</th><th scope='col'>Borrar</th></tr></thead><tbody>";
 					var main = "";
 					for (i = 0; i < productosE.length; i++) {
 						main += "<tr><td>" + productosE[i].codigo_producto
@@ -336,7 +325,7 @@
 								+ "</td><td>" + productosE[i].nombre_producto
 								+ "</td><td>" + productosE[i].precio_compra
 								+ "</td><td>" + productosE[i].precio_venta
-								+ "</td><td><button type='button' class='btn btn-danger btn-uniform btn-round' id='"+ productosE[i].codigo_producto +"' onclick='eliminarproducto("+ productosE[i].codigo_producto +")' data-toggle='modal' data-target='#ModalEliminar'><i class='icon-trash icon-large'></i></button>"
+								+ "</td><td><button type='button' class='btn btn-danger btn-uniform btn-round' id='"+ productosE[i].codigo_producto +"' onclick='eliminarproducto("+ productosE[i].codigo_producto +")' data-toggle='modal' data-target='#ModalEliminarProducto'><i class='icon-trash icon-large'></i></button>"
 								+ "</td></tr>";
 					}
 					var tblbottom = "</tbody></table>";
@@ -350,11 +339,14 @@
 		
 		//Eliminar Producto
 		function eliminarproducto(id) {
-			//var y = document.getElementById("nitproveedor").value;
+			
+			var getUrl = window.location;
+			var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+			
 			var y = id;
 			var req = new XMLHttpRequest();
 			var coincidencia = false;
-			req.open('GET', 'http://localhost:8080/listarproductos', false);
+			req.open('GET', baseUrl+'//listarproductos', false);
 			req.send(null);
 			var productosE = null;
 			if (req.status == 200)
@@ -373,12 +365,9 @@
 			console.log(coincidencia);
 
 			if (coincidencia != false) {
-				//var codigo_producto=document.getElementById("codigo_producto").value;
 				var codigo_producto = id;
-				
 				var xhr = new XMLHttpRequest();
-				xhr.open("DELETE", "http://localhost:8080/eliminarproducto?codigo_producto="+codigo_producto);
-						
+				xhr.open('DELETE', baseUrl+'//eliminarproducto?codigo_producto='+codigo_producto);
 				xhr.send();
 
 			} 

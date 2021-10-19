@@ -62,7 +62,7 @@
 					<li><a href="ventas.jsp"><span class="yay-icon"><span
 								data-feather="send" class="rui-icon rui-icon-stroke-1_5"></span></span>
 							<span>Ventas</span> <span class="rui-yaybar-circle"></span></a></li>
-					<li><a href="reportes.jsp"><span class="yay-icon"><span
+					<li><a href="reportes.jsp" onclick="reporteusuarios()"><span class="yay-icon"><span
 								data-feather="layers" class="rui-icon rui-icon-stroke-1_5"></span></span>
 							<span>Reportes</span> <span class="rui-yaybar-circle"></span></a></li>
 				</ul>
